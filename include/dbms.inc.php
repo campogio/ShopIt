@@ -1,10 +1,14 @@
 <?php
 
-	$mysqli = new mysqli("localhost", "root", "viva1felice", "tdw");
+    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
-	if ($mysqli->connect_errno) {
-		printf("Connect failed: %s\n", $mysqli->connect_error);
-		exit();
-	}
+	$mysqli = new mysqli("localhost", "root", database:"mydb");
+
+    if ($mysqli->connect_error) {
+        echo "Not connected to DB, error: " . $mysqli->connect_error;
+    }
+    //else {
+    //    echo "Connected.";
+    //}
 
 ?>
