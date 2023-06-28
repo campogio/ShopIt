@@ -3,10 +3,11 @@
     require "include/template2.inc.php";
     require "include/dbms.inc.php";
     require "include/dbservice.inc.php";
+    require "include/auth.inc.php";
 
     $main = new Template("dtml/frame-public.html");
 
-    $username = $_POST['email'];
+    /*$username = $_POST['email'];
 
     $password = $_POST['password'];
 
@@ -16,7 +17,7 @@
 
         echo "iduser:",$data['iduser'];
 
-    }
+    } */
 
     $main->close();
 
