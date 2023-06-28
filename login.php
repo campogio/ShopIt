@@ -1,24 +1,23 @@
 <?php
+	
+	require "include/template2.inc.php";
+	require "include/dbms.inc.php";
+	require "include/dbservice.inc.php";
+	require "include/auth.inc.php";
+	
+	Header("Location: index.php");
+	
+	/*$username = $_POST['email'];
 
-    require "include/template2.inc.php";
-    require "include/dbms.inc.php";
-    require "include/dbservice.inc.php";
-    require "include/auth.inc.php";
+	$password = $_POST['password'];
 
-    $main = new Template("dtml/frame-public.html");
+	$result =getUser($mysqli,$username,$password);
 
-    /*$username = $_POST['email'];
+	while ($data = $result->fetch_assoc()){
 
-    $password = $_POST['password'];
+    echo "iduser:",$data['iduser'];
 
-    $result =getUser($mysqli,$username,$password);
+	} */
 
-    while ($data = $result->fetch_assoc()){
-
-        echo "iduser:",$data['iduser'];
-
-    } */
-
-    $main->close();
 
 ?>

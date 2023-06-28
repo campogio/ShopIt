@@ -6,21 +6,12 @@ class Auth
 
     static function doLogin()
     {
+		
+		session_start();
 
         global $mysqli;
-
-        if (isset($_POST['email']) and isset($_POST['password'])) {
-
-            /* username and passowrd have been entered in login.php */
-
-            /* AUTHENTICATION ONLY
-            $result = $mysqli->query("
-                SELECT *
-                FROM users
-                WHERE username = '{$_POST['username']}' AND password = MD5('{$_POST['password']}');
-            ");
-            */
-
+		
+		if (isset($_POST['email']) and isset($_POST['password'])) {
 
             $result = $mysqli->query("
                 
@@ -59,6 +50,10 @@ class Auth
 
 
         } else {
+			
+			if(basename($_SERVER['SCRIPT_NAME']) =="index.php"){
+				return;
+			}
 
             /* una richiesta di autenticazione fuori da login.php */
 
@@ -72,10 +67,11 @@ class Auth
 
 
         }
-
-        $script = basename($_SERVER['SCRIPT_NAME']);
-
-        if (!isset($_SESSION['auth'][$script]) and $script !="login.php") {
+		
+		
+		$script = basename($_SERVER['SCRIPT_NAME']);
+		
+		if (!isset($_SESSION['auth'][$script]) and $script !="login.php") {
             Header("Location: index.php?error&non_autorizzato");
             exit;
         }
