@@ -1,6 +1,14 @@
 <?php
 
     require "dbms.inc.php";
+    
+    function getTables(){
+        
+        global $mysqli;
+        $result= $mysqli->query("SHOW TABLES");
+        return $result;
+        
+    }
 
     function getUser($mysqli,$user,$pass){
 

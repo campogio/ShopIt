@@ -1,13 +1,18 @@
 <?php
 	
 	require "include/template2.inc.php";
+	require "include/dbservice.inc.php";
 	
 	$main = new Template("dtml/admin-fixed-sidebar.html");
 	$body = new Template("dtml/datatable-card.html");
 	
-	$body->setContent("column","id");
-	$body->setContent("column","Bib");
+	$categories = getTables();
 	
+	while ($data = $categories->fetch_assoc()){
+		$body->setContent("column",$data['Tables_in_mydb']);
+	}
+	
+	$body->setContent("column","Bib");
 	
 	$body->setContent("id","0");
 	$body->setContent("row","Test");
