@@ -8,6 +8,7 @@
 	
 	$categories = getTables();
 	
+	
 	while ($data = $categories->fetch_assoc()){
 		$body->setContent("column",$data['Tables_in_mydb']);
 	}

@@ -17,12 +17,12 @@ class Auth
                 
                     SELECT services.script
                     from user
-                    left join user_has_groups
-                    on user_has_groups.user_iduser = user.iduser
-                    left join services_has_groups 
-                    ON services_has_groups.groups_idgroups = user_has_groups.groups_idgroups
+                    left join user_has_roles
+                    on user_has_roles.user_id = user.id
+                    left join services_has_roles
+                    ON services_has_roles.roles_id = user_has_roles.roles_id
                     left JOIN services
-                    ON services.idservices = services_has_groups.services_idservices
+                    ON services.id = services_has_roles.services_id
                     where user.username = '{$_POST['email']}' AND user.password = ('{$_POST['password']}')
                 
                 ");

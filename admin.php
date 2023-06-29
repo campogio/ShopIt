@@ -11,12 +11,16 @@
 	while ($data = $tables->fetch_assoc()){
 		$main->setContent("table_link","admin.php?state=1&table=".$data['Tables_in_mydb']);
 		$main->setContent("table",$data['Tables_in_mydb']);
+		
 	}
 	
 	switch ($_GET['state']){
+		//handle CRUD page
 		case 1:
-			//handle CRUD body
+			
 			$body = new Template("dtml/datatable-card.html");
+			
+			$body->setContent('postTable',$_GET['table']);
 			
 			$columns = getTableColumns($_GET['table']);
 			
@@ -24,8 +28,11 @@
 			
 			$i=0;
 			
+			
 			while ($data = $columns->fetch_assoc()){
 				$body->setContent("column",$data['COLUMN_NAME']);
+				$body->setContent("columnName",$data['COLUMN_NAME']);
+				$body->setContent("insertInput",$data['COLUMN_NAME']);
 				$columns_arr[$i]=$data['COLUMN_NAME'];
 				$i++;
 			}

@@ -50,6 +50,32 @@
   <!-- /.card-body -->
 </div>
 
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">Insert new value</h3>
+  </div>
+  <!-- /.card-header -->
+  <!-- form start -->
+  <form action="tableInsert.php" method="POST">
+    <div class="card-body">
+
+        <input type="hidden" value="<[postTable]>" name="tableName" />
+
+      <[foreach]>
+      <div class="form-group">
+        <label><[columnName]></label>
+        <input type="text" name="<[insertInput]>" class="form-control" id="exampleInputEmail1" placeholder="Enter value">
+      </div>
+      <[/foreach]>
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
 <!-- DataTables  & Plugins -->
 <script src="dtml/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="dtml/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>

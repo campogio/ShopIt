@@ -39,6 +39,27 @@
         return $result;
         
     }
+    
+    function insertTableData($table,$columns,$params){
+        
+        global $mysqli;
+        $parameters = str_repeat('?,', count($params) - 1) . '?';
+        $sql = "INSERT INTO $table("; // sql
+        
+        foreach ($columns as $col){
+            $sql= $sql . $col . ",";
+        }
+        
+        $sql= rtrim($sql,",");
+        
+        $sql= $sql . " ) VALUES($parameters)";
+        
+        //echo $sql;
+        
+        $result = $mysqli->execute_query($sql,$params);
+        return $result;
+        
+    }
 
     function getUser($mysqli,$user,$pass){
 
