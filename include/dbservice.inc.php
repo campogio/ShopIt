@@ -5,6 +5,29 @@
     ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
+    function exists($table,$columns,$params){
+        
+        global $mysqli;
+        
+        $sql = "SELECT * FROM $table WHERE ";
+        
+        if($columns[0]=="id"){
+            $sql = $sql . "id = " . $params[0];
+            
+            $result = $mysqli ->query($sql);
+            
+            if($result->num_rows>0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        }else{
+            return false;
+        }
+        
+    }
+    
     function getTables(){
         
         global $mysqli;
@@ -43,21 +66,41 @@
     function insertTableData($table,$columns,$params){
         
         global $mysqli;
-        $parameters = str_repeat('?,', count($params) - 1) . '?';
-        $sql = "INSERT INTO $table("; // sql
         
-        foreach ($columns as $col){
-            $sql= $sql . $col . ",";
+        if(exists($table,$columns,$params)){
+            $sql = "UPDATE $table SET "; // sql
+            
+            
+            //Starting from 1 cause ID can't be changed
+            for($i=1;$i<count($columns);$i++){
+                $sql = $sql . $columns[$i] . " = '" . $params[$i] . "',";
+            }
+            
+            $sql= rtrim($sql,",");
+            
+            $sql = $sql . " WHERE id = " . $params[0];
+            
+            $result = $mysqli->execute_query($sql);
+            
+        }else{
+            $parameters = str_repeat('?,', count($params) - 1) . '?';
+            $sql = "INSERT INTO $table("; // sql
+            
+            foreach ($columns as $col){
+                $sql= $sql . $col . ",";
+            }
+            
+            $sql= rtrim($sql,",");
+            
+            $sql= $sql . " ) VALUES($parameters)";
+            
+            $result = $mysqli->execute_query($sql,$params);
         }
         
-        $sql= rtrim($sql,",");
+        echo $sql;
         
-        $sql= $sql . " ) VALUES($parameters)";
-        
-        //echo $sql;
-        
-        $result = $mysqli->execute_query($sql,$params);
         return $result;
+        
         
     }
 
