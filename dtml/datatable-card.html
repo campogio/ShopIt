@@ -32,6 +32,8 @@
         <th><[column]></th>
         <[/foreach]>
 
+        <th>Remove</th>
+
       </tr>
       </thead>
       <tbody>
@@ -42,6 +44,7 @@
         <[foreach]>
         <td><[row]></td>
         <[/foreach]>
+
 
       </tr>
       <[/foreach]>
@@ -54,11 +57,11 @@
 
 <div class="card card-primary">
   <div class="card-header">
-    <h3 class="card-title">Insert/Update value</h3>
+    <h3 class="card-title">Create/Update/Delete value</h3>
   </div>
   <!-- /.card-header -->
   <!-- form start -->
-  <form action="tableInsert.php" method="POST">
+  <form action="tableOperations.php" method="POST">
     <div class="card-body">
 
         <input type="hidden" value="<[postTable]>" name="tableName" />
@@ -73,7 +76,8 @@
     <!-- /.card-body -->
 
     <div class="card-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" value="create" name="create" class="btn btn-primary">Create/Update</button>
+      <button type="submit" class="btn btn-danger" value="delete" name="delete" class="btn btn-primary">Delete</button>
     </div>
   </form>
 </div>

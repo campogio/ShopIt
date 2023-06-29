@@ -63,6 +63,31 @@
         
     }
     
+    function removeTableData($table,$columns,$params){
+        
+        global $mysqli;
+        
+        $sql = "DELETE FROM $table WHERE ";
+        
+        for($i=0;$i<count($columns);$i++){
+            
+            if(($i+1) == count($columns)){
+                $sql = $sql . $columns[$i] . " = ?";
+            }else{
+                $sql = $sql . $columns[$i] . " = ? AND ";
+            }
+        }
+        
+        echo $sql;
+        
+        $mysqli->prepare($sql);
+        
+        $result = $mysqli->execute_query($sql,$params);
+        
+        return $result;
+        
+    }
+    
     function insertTableData($table,$columns,$params){
         
         global $mysqli;
