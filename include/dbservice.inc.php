@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function exists($table,$columns,$params){
@@ -32,6 +32,15 @@
         
         global $mysqli;
         $result= $mysqli->query("SHOW TABLES");
+        return $result;
+        
+    }
+    
+    function getProductsByCategory($category,$amount,$offset){
+    
+        global $mysqli;
+        $result= $mysqli->query("SELECT * FROM products JOIN category ON products.category_id = category.id WHERE category.name = '$category'");
+        
         return $result;
         
     }

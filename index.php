@@ -2,26 +2,28 @@
 
 	require "include/template2.inc.php";
 	require "include/auth.inc.php";
+	require "include/dbservice.inc.php";
 
 
 	session_start();
 	
-	echo json_encode($_SESSION);
+	//echo json_encode($_SESSION);
 	
-	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+	//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
     $main = new Template("dtml/frame-public.html");
     $body = new Template("dtml/shop-home.html");
-	$product = new Template("dtml/product.html");
 	
+	$categories = getTableData("category")->fetch_all();
+	
+	$products_arr = array();
 	
 	for($k=0;$k<3;$k++){
 		
-		$body->setContent("category", "Category ".$k);
+		$body->setContent("category_href", $categories[$k][1]);
+		$body->setContent("category", $categories[$k][1]);
 		
 		for($i=0;$i<3;$i++){
-			
-			echo $i;
 			
 			$body->setContent("productName","Product ".$i);
 			$body->setContent("productPrice", $i);
