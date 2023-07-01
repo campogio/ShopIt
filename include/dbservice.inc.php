@@ -25,7 +25,6 @@
         }else{
             return false;
         }
-        
     }
     
     function getTables(){
@@ -39,7 +38,30 @@
     function getProductsByCategory($category,$amount,$offset){
     
         global $mysqli;
-        $result= $mysqli->query("SELECT * FROM products JOIN category ON products.category_id = category.id WHERE category.name = '$category'");
+        $result= $mysqli->query("SELECT products.*,image.path,category.name AS 'categoryname' FROM products
+                                        JOIN category ON products.category_id = category.id
+                                        JOIN image ON products.image_id = image.id
+                                        WHERE category.name ='$category' LIMIT $amount OFFSET $offset");
+        
+        return $result;
+        
+    }
+    
+    function getProductById($id){
+    
+        global $mysqli;
+        $result= $mysqli->query("SELECT products.*,category.name AS 'categoryname' FROM products
+                                    JOIN category ON products.category_id = category.id WHERE products.id= $id");
+        
+        return $result;
+    }
+    
+    function getImagesForProduct($id){
+        
+        global $mysqli;
+        
+        $result = $mysqli->query("SELECT image.id,image.path FROM products_has_image
+                                        RIGHT JOIN image ON products_has_image.image_id= image.id WHERE products_id = $id;");
         
         return $result;
         

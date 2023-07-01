@@ -16,26 +16,42 @@
 	
 	$categories = getTableData("category")->fetch_all();
 	
-	$products_arr = array();
-	
 	for($k=0;$k<3;$k++){
 		
 		$body->setContent("category_href", $categories[$k][1]);
 		$body->setContent("category", $categories[$k][1]);
 		
-		for($i=0;$i<3;$i++){
+		$products= getProductsByCategory($categories[$k][1],3,0);
+		
+		while ($data= $products->fetch_assoc()){
 			
-			$body->setContent("productName","Product ".$i);
-			$body->setContent("productPrice", $i);
+			$body->setContent("productName",$data['name']);
+			$body->setContent("itemImagePath",$data['path']);
+			$body->setContent("itemId1",$data['id']);
+			$body->setContent("itemId2",$data['id']);
 			
-			//Item is on sale?
-			if(true){
+			
+			if($data['saleprice']==null){
+				$body->setContent("productPrice", $data['price']);
+				$body->setContent("productSalePrice", '');
+				$body->setContent("saleRibbon",'');
+			}else{
+				
+				$body->setContent("productPrice", '<del>'.$data["price"].'</del>');
+				$body->setContent("productSalePrice", $data['saleprice']);
 				$body->setContent("saleRibbon",'<div class="ribbon sale">SALE</div>');
+				
 			}
-			//Item is new?
-			if(true){
+			
+			//Check if new Ribbon needs to be added to product
+			if(strtotime($data['added'])>strtotime('-7 day')){
 				$body->setContent("newRibbon",'<div class="ribbon new">NEW</div>');
+				echo "Earlier than 7 days <br>";
+			}else{
+				$body->setContent("newRibbon",'');
+				echo "Later <br>";
 			}
+			
 			
 		}
 		

@@ -1,0 +1,147 @@
+<div id="heading-breadcrumbs">
+  <div class="container">
+    <div class="row d-flex align-items-center flex-wrap">
+      <div class="col-md-7">
+        <h1 class="h2">White Blouse Armani</h1>
+      </div>
+      <div class="col-md-5">
+        <ul class="breadcrumb d-flex justify-content-end">
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="fullCategory.php?category=<[categoryName]>&page=1"><[categoryBreadcrumb]></a></li>
+          <li class="breadcrumb-item active"><[itemNameBreadcrumb]></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="content">
+  <div class="container">
+    <div class="row bar">
+      <!-- LEFT COLUMN _________________________________________________________-->
+      <div class="col-lg-9">
+        <h2><[itemName]></h2>
+        <p class="goToDescription"><a href="#details" class="scroll-to text-uppercase">Scroll to product details</a></p>
+        <div id="productMain" class="row">
+          <div class="col-sm-6">
+            <div data-slider-id="1" class="project owl-carousel">
+
+              <[foreach]>
+              <div> <img src="<[imagePath]>" alt="" class="img-fluid"></div>
+              <[/foreach]>
+
+
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="box">
+              <form action="itemActions.php" method="POST">
+
+                <p class="price"><[itemPrice]></p>
+                <p class="text-center">
+                  <button type="submit" name="cart" value="<[itemId1]>" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                  <button type="submit" name="wishlist" value="<[itemId2]>" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-default"><i class="fa fa-heart-o"></i></button>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div id="details" class="box mb-4 mt-4">
+          <[itemDetails]>
+        </div>
+        <div id="product-social" class="box social text-center mb-5 mt-5">
+          <h4 class="heading-light">Share it to your friends</h4>
+          <ul class="social list-inline">
+            <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external facebook"><i class="fa fa-facebook"></i></a></li>
+            <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external gplus"><i class="fa fa-google-plus"></i></a></li>
+            <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external twitter"><i class="fa fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="email"><i class="fa fa-envelope"></i></a></li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="box text-uppercase mt-0 mb-small">
+              <h3>You may also like these products</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product">
+              <div class="image"><a href="#"><img src="img/product2.jpg" alt="" class="img-fluid image1"></a></div>
+              <div class="text">
+                <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product">
+              <div class="image"><a href="#"><img src="img/product3.jpg" alt="" class="img-fluid image1"></a></div>
+              <div class="text">
+                <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product">
+              <div class="image"><a href="#"><img src="img/product1.jpg" alt="" class="img-fluid image1"></a></div>
+              <div class="text">
+                <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="box text-uppercase mt-0 mb-small">
+              <h3>Products viewed recently</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product">
+              <div class="image"><a href="#"><img src="img/product3.jpg" alt="" class="img-fluid image1"></a></div>
+              <div class="text">
+                <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product">
+              <div class="image"><a href="#"><img src="img/product1.jpg" alt="" class="img-fluid image1"></a></div>
+              <div class="text">
+                <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product">
+              <div class="image"><a href="#"><img src="img/product2.jpg" alt="" class="img-fluid image1"></a></div>
+              <div class="text">
+                <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
+                <p class="price">$143</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <!-- MENUS AND FILTERS-->
+        <div class="panel panel-default sidebar-menu">
+          <div class="panel-heading">
+            <h3 class="h4 panel-title">Categories</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="nav nav-pills flex-column text-sm category-menu">
+              <[foreach]>
+              <li class="nav-item"><a href="fullCategory.php?category=<[categoryHref]>&page=1" class="nav-link d-flex align-items-center justify-content-between"><span> <[sidebarCategory]> </span></a>
+              </li>
+              <[/foreach]>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
