@@ -62,11 +62,6 @@
 	}
 	
 	
-	
-	if(isset($_SESSION['auth']['admin.php'])){
-		$main->setContent("dashboard", "<a href='admin.php'>Administration Dashboard</a>");
-	}
-	
 	$main->setContent("body",$body->get());
 	
 	$main->close();

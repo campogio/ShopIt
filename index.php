@@ -3,6 +3,7 @@
 	require "include/template2.inc.php";
 	require "include/auth.inc.php";
 	require "include/dbservice.inc.php";
+	require "include/utils.inc.php";
 
 
 	session_start();
@@ -57,13 +58,9 @@
 		
 	}
 	
+	populatePublicFrame($main);
 	
 	
-	
-	
-	if(isset($_SESSION['auth']['admin.php'])){
-		$main->setContent("dashboard", "<a href='admin.php'>Administration Dashboard</a>");
-	}
     $main->setContent("body", $body->get());
     $main->close();
 
