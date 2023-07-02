@@ -1,0 +1,61 @@
+
+<div class="box">
+
+    <[alertBox]>
+
+    <form action="sellItem.php" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="item-name">Item Name</label>
+            <input id="item-name" name="name" type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="item-price">Item Price</label>
+            <input id="item-price" name="price" type="number" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="item-saleprice">Item Sale Price</label>
+            <input id="item-saleprice" name="saleprice" type="number" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="item-category">Item Category</label>
+            <select name="category" class="custom-select" id="item-category">
+                <option selected>Choose...</option>
+                <[foreach]>
+                <option value="<[categoryValue]>"><[category]></option>
+                <[/foreach]>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="item-brand">Item Brand</label>
+            <select name="brand" class="custom-select" id="item-brand">
+                <option selected>Choose...</option>
+                <[foreach]>
+                <option value="<[brandValue]>"><[brand]></option>
+                <[/foreach]>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="item-brand">Showcase Image</label>
+            <input id="image-showcase" type="file" name="showcase" />
+        </div>
+
+        <div class="form-group">
+            <label for="item-brand">Extra Images</label>
+            <input type="file" multiple="multiple" name="foobar[]" />
+        </div>
+
+
+
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-template-outlined"><i class="fa fa-user-md"></i> Submit</button>
+        </div>
+    </form>
+
+</div>
+
