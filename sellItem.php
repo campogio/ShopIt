@@ -6,8 +6,7 @@
 	require "include/utils.inc.php";
 	
 	//echo "Hello";
-	
-	echo json_encode($_POST);
+	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	
 	$main = new Template("dtml/frame-public.html");
 	
@@ -16,6 +15,8 @@
 	$sellerId=1;
 	
 	$uploadDir=__DIR__.DIRECTORY_SEPARATOR."dtml".DIRECTORY_SEPARATOR."img".DIRECTORY_SEPARATOR.$sellerId;
+	$files = array();
+	
 	
 	if(!file_exists($uploadDir)){
 		mkdir($uploadDir,0777,true);
@@ -26,6 +27,8 @@
 		
 		global $uploadDir;
 		global $sellerId;
+		global $files;
+		
 		if(!preg_match('#^[a-z0-9\s]+$#i',$_POST['name'])){
 			echo "wrong name";
 			return false;
@@ -58,20 +61,40 @@
 			
 		}
 		
-		foreach ($_FILES as $file) {
-			if (UPLOAD_ERR_OK === $file['error']) {
-				$fileName = basename($file['name']);
-				$fileParts = pathinfo($file['name']);
-				
-				$newName=uniqid($sellerId."-Image");
-				
-				if(getimagesize($file['tmp_name'])){
+		$index = 0;
+		for($i =0;$_FILES['images']['name'][$i] != NULL;$i++){
+			$files[] = array($_FILES['images']['name'][$i], $_FILES['images']['type'][$i],
+				$_FILES['images']['tmp_name'][$i], $_FILES['images']['size'][$i],$_FILES['images']['error'][$i]);
+		}
+		
+		if(UPLOAD_ERR_OK === $_FILES['showcase']['error']){
+			if(getimagesize($_FILES['showcase']['tmp_name'])){
+				echo "IS FILE";
+			}else{
+				return false;
+			}
+		}
+		
+		
+		foreach ($files as $file) {
+			
+			if (UPLOAD_ERR_OK === $file[4]) {
+				if(getimagesize($file[2])){
 					echo "IS FILE";
-					echo json_encode($file);
-					move_uploaded_file($file['tmp_name'], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
+				}else{
+					return false;
 				}
 			}
 		}
+		
+		/*foreach ($files as $file) {
+			if (UPLOAD_ERR_OK === $file[4]) {
+				if(getimagesize($file['tmp_name'])){
+					echo "IS FILE";
+					echo json_encode($file);
+				}
+			}
+		}*/
 		
 		return true;
 		
@@ -81,6 +104,38 @@
 		
 		if(isFormValid()) {
 			$body->setContent("alertBox","");
+			
+			foreach ($_FILES['showcase'] as $showcase) {
+				if (UPLOAD_ERR_OK === $showcase[4]) {
+					$fileName = basename($showcase[0]);
+					$fileParts = pathinfo($showcase[0]);
+					
+					$newName=uniqid($sellerId."-Image");
+					
+					if(getimagesize($showcase[3])){
+						echo "IS FILE";
+						move_uploaded_file($showcase[3], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
+					}else{
+						echo "ERROR";
+					}
+				}
+			}
+			
+			/*foreach ($files as $file) {
+				if (UPLOAD_ERR_OK === $file[4]) {
+					$fileName = basename($file[0]);
+					$fileParts = pathinfo($file[0]);
+					
+					$newName=uniqid($sellerId."-Image");
+					
+					if(getimagesize($file['tmp_name'])){
+						echo "IS FILE";
+						echo json_encode($file);
+						move_uploaded_file($file[2], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
+					}
+				}
+			}*/
+			
 		}else{
 			$body->setContent("alertBox",'<div role="alert" class="alert alert-danger alert-dismissible">
         <button type="button" data-dismiss="alert" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Some fields were not filled correctly.

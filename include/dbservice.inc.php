@@ -5,6 +5,26 @@
     //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
+    function insertImage($file){
+        global $mysqli;
+        $result = $mysqli->query("");
+    }
+    
+    function insertProduct($name,$price,$saleprice,$brand,$category,$showcaseid,$imagesid)
+    {
+        global $mysqli;
+        
+    }
+    
+    function testInsert(){
+        
+        global $mysqli;
+        $result = $mysqli->query("INSERT INTO user(username,password) VALUES('username','userpass');");
+        
+        echo "ID THE QUERY WAS ADDED TO: ". $mysqli->insert_id;
+        
+    }
+    
     function exists($table,$columns,$params){
         
         global $mysqli;
