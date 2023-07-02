@@ -105,36 +105,27 @@
 		if(isFormValid()) {
 			$body->setContent("alertBox","");
 			
-			foreach ($_FILES['showcase'] as $showcase) {
-				if (UPLOAD_ERR_OK === $showcase[4]) {
-					$fileName = basename($showcase[0]);
-					$fileParts = pathinfo($showcase[0]);
-					
-					$newName=uniqid($sellerId."-Image");
-					
-					if(getimagesize($showcase[3])){
-						echo "IS FILE";
-						move_uploaded_file($showcase[3], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
-					}else{
-						echo "ERROR";
-					}
-				}
-			}
 			
-			/*foreach ($files as $file) {
+			$fileName = basename($_FILES['showcase']['name']);
+			$fileParts = pathinfo($_FILES['showcase']['name']);
+			
+			$newName=uniqid($sellerId."-Image");
+			move_uploaded_file($_FILES['showcase']['tmp_name'], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
+			
+			foreach ($files as $file) {
 				if (UPLOAD_ERR_OK === $file[4]) {
 					$fileName = basename($file[0]);
 					$fileParts = pathinfo($file[0]);
 					
 					$newName=uniqid($sellerId."-Image");
 					
-					if(getimagesize($file['tmp_name'])){
+					if(getimagesize($file[2])){
 						echo "IS FILE";
 						echo json_encode($file);
 						move_uploaded_file($file[2], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
 					}
 				}
-			}*/
+			}
 			
 		}else{
 			$body->setContent("alertBox",'<div role="alert" class="alert alert-danger alert-dismissible">
