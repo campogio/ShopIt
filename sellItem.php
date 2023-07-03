@@ -5,6 +5,8 @@
 	require "include/dbservice.inc.php";
 	require "include/utils.inc.php";
 	
+	session_start();
+	
 	//echo "Hello";
 	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	
@@ -103,8 +105,7 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		if(isFormValid()) {
-			$body->setContent("alertBox","");
-			
+			//TODO ADD RICH TEXT FOR DESC
 			
 			$fileName = basename($_FILES['showcase']['name']);
 			$fileParts = pathinfo($_FILES['showcase']['name']);
@@ -112,7 +113,9 @@
 			$newName=uniqid($sellerId."-Image");
 			move_uploaded_file($_FILES['showcase']['tmp_name'], __DIR__."/".$uploadDir."/".$newName.".".$fileParts['extension']);
 			
-			insertImage($uploadDir."/".$newName.".".$fileParts['extension']);
+			$showcaseId= insertImage($uploadDir."/".$newName.".".$fileParts['extension']);
+			
+			$imageIds = array();
 			
 			foreach ($files as $file) {
 				if (UPLOAD_ERR_OK === $file[4]) {
@@ -125,10 +128,16 @@
 						echo "IS FILE";
 						echo json_encode($file);
 						move_uploaded_file($file[2], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
+						
+						array_push($imageIds,insertImage($uploadDir."/".$newName.".".$fileParts['extension']));
+						
 					}
 				}
 			}
 			
+			insertProduct($_SESSION['id'],$_POST['name'],$_POST['price'],$_POST['saleprice'],$_POST['brand'],$_POST['category'],$showcaseId,$imageIds);
+			
+			$body->setContent("alertBox","Added");
 		}else{
 			$body->setContent("alertBox",'<div role="alert" class="alert alert-danger alert-dismissible">
         <button type="button" data-dismiss="alert" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Some fields were not filled correctly.

@@ -13,12 +13,38 @@
         echo $sql;
         
         $result = $mysqli->query($sql);
+        
+        return $mysqli->insert_id;
     }
     
-    function insertProduct($name,$price,$saleprice,$brand,$category,$showcaseid,$imagesid)
+    function insertProduct($userid,$name,$price,$saleprice,$brand,$category,$showcaseid,$imagesids)
     {
         global $mysqli;
+        $sql = "";
         
+        $date = date("Y-m-d");
+
+        if($saleprice != ""){
+            $sql = "INSERT INTO products(user_id,name,price,saleprice,brand_id,category_id,image_id,added) VALUES (".$userid.",'".$name."',".$price.",".$saleprice.",".$brand.",".$category.",".$showcaseid.",'".$date."')";
+        }else{
+            $sql = "INSERT INTO products(user_id,name,price,brand_id,category_id,image_id,added) VALUES (".$userid.",'".$name."',".$price.",".$brand.",".$category.",".$showcaseid.",'".$date."')";
+        }
+        
+        echo $sql;
+        
+        $mysqli->query($sql);
+        
+        $itemid = $mysqli->insert_id;
+        
+        $sql = "INSERT INTO products_has_image VALUES (".$itemid.",".$showcaseid.")";
+        
+        $mysqli->query($sql);
+        
+        foreach ($imagesids as $image){
+            $sql = "INSERT INTO products_has_image VALUES (".$itemid.",".$image.")";
+            
+            $mysqli->query($sql);
+        }
     }
     
     function testInsert(){

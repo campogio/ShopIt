@@ -15,7 +15,7 @@ class Auth
 
             $result = $mysqli->query("
                 
-                    SELECT services.script
+                    SELECT services.script,user.id
                     from user
                     left join user_has_roles
                     on user_has_roles.user_id = user.id
@@ -39,17 +39,21 @@ class Auth
             }
 
             $script = array();
+			$id = 0;
 
             while ($data = $result->fetch_assoc()) {
 
                 $script[$data['script']] = true;
-
+				$id = $data['id'];
             }
 
             $_SESSION['auth'] = $script;
+			$_SESSION['id']= $id;
 
 
         } else {
+			
+			echo json_encode($_SESSION) ;
 			
 			if(basename($_SERVER['SCRIPT_NAME']) =="index.php"){
 				return;
