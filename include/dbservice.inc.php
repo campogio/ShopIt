@@ -5,9 +5,14 @@
     //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
-    function insertImage($file){
+    function insertImage($filepath){
         global $mysqli;
-        $result = $mysqli->query("");
+        
+        $sql= "INSERT INTO image(path) VALUES ('$filepath')";
+        
+        echo $sql;
+        
+        $result = $mysqli->query($sql);
     }
     
     function insertProduct($name,$price,$saleprice,$brand,$category,$showcaseid,$imagesid)

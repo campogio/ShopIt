@@ -14,7 +14,7 @@
 	
 	$sellerId=1;
 	
-	$uploadDir=__DIR__.DIRECTORY_SEPARATOR."dtml".DIRECTORY_SEPARATOR."img".DIRECTORY_SEPARATOR.$sellerId;
+	$uploadDir="dtml"."/"."img"."/".$sellerId;
 	$files = array();
 	
 	
@@ -110,7 +110,9 @@
 			$fileParts = pathinfo($_FILES['showcase']['name']);
 			
 			$newName=uniqid($sellerId."-Image");
-			move_uploaded_file($_FILES['showcase']['tmp_name'], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
+			move_uploaded_file($_FILES['showcase']['tmp_name'], __DIR__."/".$uploadDir."/".$newName.".".$fileParts['extension']);
+			
+			insertImage($uploadDir."/".$newName.".".$fileParts['extension']);
 			
 			foreach ($files as $file) {
 				if (UPLOAD_ERR_OK === $file[4]) {
