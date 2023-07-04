@@ -35,9 +35,18 @@
           <div class="col-sm-6">
             <div class="box">
               <form action="itemActions.php" method="POST">
-
                 <p class="price"><[itemPrice]></p>
                 <p class="text-center">
+                  <select name="quantity" id="item-quantity">
+
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+
+                  </select>
+
                   <button type="submit" name="cart" value="<[itemId1]>" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
                   <button type="submit" name="wishlist" value="<[itemId2]>" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-default"><i class="fa fa-heart-o"></i></button>
                 </p>

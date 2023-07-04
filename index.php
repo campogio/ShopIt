@@ -21,6 +21,8 @@
 		
 		$body->setContent("category_href", $categories[$k][1]);
 		$body->setContent("category", $categories[$k][1]);
+		$body->setContent("categoryHref", $categories[$k][1]);
+		$body->setContent("sidebarCategory", $categories[$k][1]);
 		
 		$products= getProductsByCategory($categories[$k][1],3,0);
 		
@@ -47,10 +49,10 @@
 			//Check if new Ribbon needs to be added to product
 			if(strtotime($data['added'])>strtotime('-7 day')){
 				$body->setContent("newRibbon",'<div class="ribbon new">NEW</div>');
-				echo "Earlier than 7 days <br>";
+				//echo "Earlier than 7 days <br>";
 			}else{
 				$body->setContent("newRibbon",'');
-				echo "Later <br>";
+				//echo "Later <br>";
 			}
 			
 			

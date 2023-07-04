@@ -89,15 +89,6 @@
 			}
 		}
 		
-		/*foreach ($files as $file) {
-			if (UPLOAD_ERR_OK === $file[4]) {
-				if(getimagesize($file['tmp_name'])){
-					echo "IS FILE";
-					echo json_encode($file);
-				}
-			}
-		}*/
-		
 		return true;
 		
 	}
@@ -105,7 +96,7 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		if(isFormValid()) {
-			//TODO ADD RICH TEXT FOR DESC
+			//TODO ADD RICH TEXT FOR DESC, ADD BREADCRUMB TO GET OUT OF THIS PAGE
 			
 			$fileName = basename($_FILES['showcase']['name']);
 			$fileParts = pathinfo($_FILES['showcase']['name']);
@@ -138,10 +129,17 @@
 			insertProduct($_SESSION['id'],$_POST['name'],$_POST['price'],$_POST['saleprice'],$_POST['brand'],$_POST['category'],$showcaseId,$imageIds);
 			
 			$body->setContent("alertBox","Added");
+			
+			unset($_POST);
+			unset($_FILES);
+			
 		}else{
 			$body->setContent("alertBox",'<div role="alert" class="alert alert-danger alert-dismissible">
         <button type="button" data-dismiss="alert" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Some fields were not filled correctly.
     	</div>');
+			
+			unset($_POST);
+			unset($_FILES);
 		}
 		
 	}

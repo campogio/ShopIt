@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -15,6 +15,102 @@
         $result = $mysqli->query($sql);
         
         return $mysqli->insert_id;
+    }
+    
+    function getCartForUser($userId)
+    {
+        global $mysqli;
+        
+        $sql = "SELECT products_id,quantity,name,price,saleprice,path FROM cart_has_products
+                LEFT JOIN cart ON cart.id = cart_has_products.cart_id
+                LEFT JOIN products ON products.id=cart_has_products.products_id
+                LEFT JOIN image ON products.image_id = image.id
+                WHERE cart.user_id = ".$userId.";";
+        
+        $result = $mysqli->query($sql);
+        
+        return $result;
+        
+    }
+    
+    function postOrder($userId,$orderInfo,$products){
+        
+        global $mysqli;
+        
+        $date = date("Y-m-d");
+        
+        if($orderInfo['phone'] == ""){
+            $sql = "INSERT INTO order(name,surname,street,city,zipcode,state,email,date)
+                VALUES (".$orderInfo['name'].",".$orderInfo['lastname'].",".$orderInfo['street'].",".$orderInfo['city'].",
+                        ".$orderInfo['zip'].",".$orderInfo['state'].",".$orderInfo['email'].",$date)";
+        }else{
+            $sql = "INSERT INTO order(name,surname,street,city,zipcode,state,telephone,email,date)
+                VALUES (".$orderInfo['name'].",".$orderInfo['lastname'].",".$orderInfo['street'].",".$orderInfo['city'].",
+                        ".$orderInfo['zip'].",".$orderInfo['state'].",".$orderInfo['phone'].",".$orderInfo['email'].",$date)";
+        }
+        
+        $mysqli->query($sql);
+        
+        $id = $mysqli->insert_id;
+        
+        $sql = "INSERT INTO user_has_order VALUES (".$userId.",".$id.")";
+        
+        $mysqli->query($sql);
+        
+        
+        $prod_ids = array();
+        
+        while($data = $products->fetch_assoc()){
+            array_push($prod_ids,$data['products_id']);
+        }
+        
+        
+        
+    }
+    
+    function removeFromCart($userId,$productId){
+        global $mysqli;
+        
+        $sql = "SELECT * FROM cart WHERE user_id =".$userId;
+        echo $sql;
+        $res =$mysqli->query($sql);
+        $id = 0;
+        
+        while ($data = $res->fetch_assoc()){
+            $id = $data['id'];
+        }
+        
+        $sql = "DELETE FROM cart_has_products WHERE cart_id = ".$id." AND products_id = " .$productId ."; ";
+        
+        echo $sql;
+        
+        $mysqli->query($sql);
+    }
+    
+    function addToCart($itemId,$userId,$quantity){
+        global $mysqli;
+        
+        $cart= $mysqli->query("SELECT * FROM cart WHERE user_id =".$userId);
+        $cartId=0;
+        
+        if($cart->num_rows == 0){
+            $mysqli->query("INSERT INTO cart (user_id) VALUES (".$userId.")");
+            
+            $cartId= $mysqli->insert_id;
+        }else{
+        
+            while ($data = $cart->fetch_assoc()){
+                
+                echo json_encode($data);
+                
+                $cartId = $data['id'];
+            }
+        
+        }
+        
+        $sql= "REPLACE INTO cart_has_products(cart_id,products_id,quantity) VALUES (".$cartId.",".$itemId.",".$quantity.")";
+        
+        $mysqli->query($sql);
     }
     
     function insertProduct($userid,$name,$price,$saleprice,$brand,$category,$showcaseid,$imagesids)
