@@ -2,7 +2,9 @@
 
 session_start();
 
-unset($_SESSION['auth']);
+$_SESSION = [];
+
+unset($_SESSION);
 
 Header("Location: index.php");
 
