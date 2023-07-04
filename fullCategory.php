@@ -2,6 +2,7 @@
 	
 	require "include/template2.inc.php";
 	require "include/dbservice.inc.php";
+	require "include/utils.inc.php";
 	
 	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	
@@ -10,6 +11,8 @@
 	
 	$main = new Template("dtml/frame-public.html");
 	$body = new Template("dtml/shop-category.html");
+	
+	populatePublicFrame($main);
 	
 	$body->setContent("categoryHeader",$_GET['category']);
 	$body->setContent("categoryBreadcrumb",$_GET['category']);

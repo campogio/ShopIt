@@ -2,11 +2,14 @@
 	
 	include "include/template2.inc.php";
 	include "include/dbservice.inc.php";
+	include "include/utils.inc.php";
 	
 	session_start();
 	
 	$main = new Template("dtml/frame-public.html");
 	$body = new Template("dtml/shop-item.html");
+	
+	populatePublicFrame($main);
 	
 	$product = getProductById($_GET['itemid']);
 	$images = getImagesForProduct($_GET['itemid']);

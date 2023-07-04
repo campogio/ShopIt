@@ -2,12 +2,17 @@
 	
 	require "include/template2.inc.php";
 	require "include/dbservice.inc.php";
+	require "include/utils.inc.php";
+	
+	session_start();
 	
 	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	
 	$main = new Template("dtml/frame-public.html");
 	
 	$body = new Template("dtml/user-order-detail.html");
+	
+	populatePublicFrame($main);
 	
 	$prods = getOrderProducts($_GET["id"]);
 	
@@ -48,6 +53,13 @@
 		
 		echo json_encode($data);
 		
+	}
+	
+	//TODO Manage if it's user's order or not
+	if($_SESSION['id']== $db_userId){
+		echo "Authorized";
+	}else{
+		echo "NOT Authorized";
 	}
 	
 	$main->setContent("body",$body->get());

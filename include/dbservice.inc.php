@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -30,6 +30,69 @@
         $result = $mysqli->query($sql);
         
         return $result;
+        
+    }
+    
+    function getUserWishlist($userId){
+        
+        global $mysqli;
+        
+        $sql = "SELECT * FROM wishlist WHERE user_id =".$userId;
+        
+        $wishlist = $mysqli->query($sql);
+        $wishlistId = 0;
+        if($wishlist->num_rows == 0){
+            $mysqli->query("INSERT INTO wishlist (user_id) VALUES (".$userId.")");
+            
+            $wishlistId= $mysqli->insert_id;
+        }else{
+            while ($data = $wishlist->fetch_assoc()){
+                
+                echo json_encode($data);
+                
+                $wishlistId = $data['id'];
+            }
+        }
+        
+        
+        $sql = "SELECT * FROM wishlist_has_products
+                LEFT JOIN wishlist ON wishlist.id = wishlist_has_products.wishlist_id
+                LEFT JOIN products ON products.id = wishlist_has_products.products_id
+                LEFT JOIN image ON image.id = products.image_id WHERE wishlist.id = ". $wishlistId;
+        
+        $result = $mysqli->query($sql);
+        
+        return $result;
+        
+    }
+    
+    function removeFromWishlist($itemId,$userId){
+    
+    }
+    
+    function addToWishlist($itemId,$userId){
+    
+        global $mysqli;
+        
+        $wishlist= $mysqli->query("SELECT * FROM wishlist WHERE user_id =".$userId);
+        $wishlistId=0;
+        
+        if($wishlist->num_rows == 0){
+            $mysqli->query("INSERT INTO wishlist (user_id) VALUES (".$userId.")");
+            
+            $wishlistId= $mysqli->insert_id;
+        }else{
+            while ($data = $wishlist->fetch_assoc()){
+                
+                echo json_encode($data);
+                
+                $wishlistId = $data['id'];
+            }
+        }
+        
+        $sql= "REPLACE INTO wishlist_has_products(wishlist_id,products_id) VALUES (".$wishlistId.",".$itemId.")";
+        
+        $mysqli->query($sql);
         
     }
     
@@ -91,9 +154,9 @@
             $cartId = $data['cart_id'];
             
             if($data['saleprice']==null OR $data['saleprice']==''){
-                $sql = "INSERT INTO order_has_products VALUES (".$id.",".$data['products_id'].",".$data['quantity'].",".$data['price'].")";
+                $sql = "INSERT INTO order_has_products VALUES (".$id.",".$data['products_id'].",".$data['quantity'].",".$data['price'].",0)";
             }else{
-                $sql = "INSERT INTO order_has_products VALUES (".$id.",".$data['products_id'].",".$data['quantity'].",".$data['saleprice'].")";
+                $sql = "INSERT INTO order_has_products VALUES (".$id.",".$data['products_id'].",".$data['quantity'].",".$data['saleprice'].",0)";
             }
             $mysqli->query($sql);
             

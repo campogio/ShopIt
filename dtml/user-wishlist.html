@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row d-flex align-items-center flex-wrap">
             <div class="col-md-7">
-                <h1 class="h2">My Orders</h1>
+                <h1 class="h2">My Wishlist</h1>
             </div>
             <div class="col-md-5">
                 <ul class="breadcrumb d-flex justify-content-end">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item active">My Orders</li>
+                    <li class="breadcrumb-item active">My Wishlist</li>
                 </ul>
             </div>
         </div>
@@ -15,38 +15,33 @@
 </div>
 <div id="content">
     <div class="container">
-        <div class="row bar mb-0">
-            <div id="customer-orders" class="col-md-9">
-                <p class="text-muted lead">If you have any questions, please feel free to <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
-                <div class="box mt-0 mb-lg-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Order</th>
-                                <th>Date</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+        <div class="row bar">
+            <div class="col-lg-9">
+                <p class="lead">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                <div class="row products">
 
-                            <[foreach]>
-                            <tr>
-                                <th># <[orderNumber]></th>
-                                <td><[orderDate]></td>
-                                <td><[orderTotal]></td>
-                                <td><[orderState]></td>
-                                <td><a href="orderDetail.php?id=<[orderId]>" class="btn btn-template-outlined btn-sm">View</a></td>
-                            </tr>
-                            <[/foreach]>
-                            </tbody>
-                        </table>
+                    <[foreach]>
+
+                    <div class="col-lg-3 col-md-4">
+                        <div class="product">
+                            <div class="image"><a href="itemDetail.php?itemid=<[itemId]>"><img src="<[itemImage]>" alt="" class="img-fluid image1"></a></div>
+                            <div class="text">
+                                <h3 class="h5"><a href="itemDetail.php?itemid=<[itemId2]>"><[itemName]></a></h3>
+                                <p class="price">
+                                    <[itemPrice]> <[itemSalePrice]>
+                                </p>
+                            </div>
+                            <div class="ribbon-holder">
+                                <[saleRibbon]>
+                                <[newRibbon]>
+                            </div>
+                        </div>
                     </div>
+
+                    <[/foreach]>
                 </div>
             </div>
-            <div class="col-md-3 mt-4 mt-md-0">
+            <div class="col-lg-3 mt-4 mt-lg-0">
                 <!-- CUSTOMER MENU -->
                 <div class="panel panel-default sidebar-menu">
                     <div class="panel-heading">

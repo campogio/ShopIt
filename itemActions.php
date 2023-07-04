@@ -19,7 +19,11 @@
 	}elseif (isset($_POST['wishlist'])){
 		echo "wishlisting item";
 		
+		addToWishlist($_POST['wishlist'],$_SESSION['id']);
+		
 		unset($_POST);
+		
+		header("Location: wishlist.php");
 	}
 	
 ?>
