@@ -2,6 +2,7 @@
 	
 	require "include/template2.inc.php";
 	require "include/dbservice.inc.php";
+	require "include/utils.inc.php";
 	
 	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	session_start();
@@ -10,6 +11,8 @@
 	echo json_encode($_SESSION);
 	
 	$main =new Template("dtml/frame-public.html");
+	
+	populatePublicFrame($main);
 	
 	switch ($_POST['step']){
 		case 1:
@@ -76,6 +79,7 @@
 			}
 			
 			$body->setContent("totalPrice",$totalAmount);
+			$body->setContent("totalPrice2",$totalAmount);
 			
 			break;
 		default:

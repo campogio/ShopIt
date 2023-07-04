@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -33,21 +33,45 @@
         
     }
     
-    function postOrder($userId,$orderInfo,$products){
+    function getOrderProducts($orderId){
+    
+        global $mysqli;
+        
+        $sql = "SELECT * FROM order_has_products
+                LEFT JOIN user_has_order ON order_has_products.order_id = user_has_order.order_id
+                LEFT JOIN products ON order_has_products.products_id = products.id
+                LEFT JOIN image ON products.image_id = image.id
+                WHERE order_has_products.order_id = ".$orderId.";";
+        $result=$mysqli->query($sql);
+        
+        return $result;
+    }
+    
+    function getUserOrders($userId){
+        global $mysqli;
+        
+        $sql = "SELECT * FROM mydb.order LEFT JOIN user_has_order ON user_has_order.order_id = mydb.order.id WHERE user_id = ".$userId;
+        
+        $result= $mysqli->query($sql);
+        
+        return $result;
+    }
+    
+    function postOrder($userId,$orderInfo,$products,$total){
         
         global $mysqli;
         
         $date = date("Y-m-d");
         
         if($orderInfo['phone'] == ""){
-            $sql = "INSERT INTO mydb.order(name,surname,street,city,zipcode,state,email,date)
+            $sql = "INSERT INTO mydb.order(name,surname,street,city,zipcode,state,email,date,total,orderstate)
                 VALUES ('".$orderInfo['firstname']."','".$orderInfo['lastname']."','".$orderInfo['street']."','".$orderInfo['city']."',
-                        '".$orderInfo['zip']."','".$orderInfo['state']."','".$orderInfo['email']."','".$date."')";
+                        '".$orderInfo['zip']."','".$orderInfo['state']."','".$orderInfo['email']."','".$date."',".$total.",0)";
         }else{
             
-            $sql = "INSERT INTO mydb.order(name,surname,street,city,zipcode,state,telephone,email,date)
+            $sql = "INSERT INTO mydb.order(name,surname,street,city,zipcode,state,telephone,email,date,total,orderstate)
                 VALUES ('".$orderInfo['firstname']."','".$orderInfo['lastname']."','".$orderInfo['street']."','".$orderInfo['city']."',
-                        '".$orderInfo['zip']."','".$orderInfo['state']."','".$orderInfo['phone']."','".$orderInfo['email']."','".$date."')";
+                        '".$orderInfo['zip']."','".$orderInfo['state']."','".$orderInfo['phone']."','".$orderInfo['email']."','".$date."',".$total.",0)";
         }
         
         echo $sql;

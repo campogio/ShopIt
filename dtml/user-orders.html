@@ -31,41 +31,16 @@
                             </tr>
                             </thead>
                             <tbody>
+
+                            <[foreach]>
                             <tr>
-                                <th># 1735</th>
-                                <td>22/06/2013</td>
-                                <td>$ 150.00</td>
-                                <td><span class="badge badge-info">Being prepared</span></td>
-                                <td><a href="customer-order.html" class="btn btn-template-outlined btn-sm">View</a></td>
+                                <th># <[orderNumber]></th>
+                                <td><[orderDate]></td>
+                                <td><[orderTotal]></td>
+                                <td><[orderState]></td>
+                                <td><a href="orderDetail.php?id=<[orderId]>" class="btn btn-template-outlined btn-sm">View</a></td>
                             </tr>
-                            <tr>
-                                <th># 1735</th>
-                                <td>22/06/2013</td>
-                                <td>$ 150.00</td>
-                                <td><span class="badge badge-info">Being prepared</span></td>
-                                <td><a href="customer-order.html" class="btn btn-template-outlined btn-sm">View</a></td>
-                            </tr>
-                            <tr>
-                                <th># 1735</th>
-                                <td>22/06/2013</td>
-                                <td>$ 150.00</td>
-                                <td><span class="badge badge-success">Received</span></td>
-                                <td><a href="customer-order.html" class="btn btn-template-outlined btn-sm">View</a></td>
-                            </tr>
-                            <tr>
-                                <th># 1735</th>
-                                <td>22/06/2013</td>
-                                <td>$ 150.00</td>
-                                <td><span class="badge badge-danger">Cancelled</span></td>
-                                <td><a href="customer-order.html" class="btn btn-template-outlined btn-sm">View</a></td>
-                            </tr>
-                            <tr>
-                                <th># 1735</th>
-                                <td>22/06/2013</td>
-                                <td>$ 150.00</td>
-                                <td><span class="badge badge-warning">On hold</span></td>
-                                <td><a href="customer-order.html" class="btn btn-template-outlined btn-sm">View</a></td>
-                            </tr>
+                            <[/foreach]>
                             </tbody>
                         </table>
                     </div>
@@ -82,7 +57,7 @@
                             <li class="nav-item"><a href="customer-orders.html" class="nav-link active"><i class="fa fa-list"></i> My orders</a></li>
                             <li class="nav-item"><a href="customer-wishlist.html" class="nav-link"><i class="fa fa-heart"></i> My wishlist</a></li>
                             <li class="nav-item"><a href="customer-account.html" class="nav-link"><i class="fa fa-user"></i> My account</a></li>
-                            <li class="nav-item"><a href="index.html" class="nav-link"><i class="fa fa-sign-out"></i> Logout</a></li>
+                            <li class="nav-item"><a href="logout.php" class="nav-link"><i class="fa fa-sign-out"></i> Logout</a></li>
                         </ul>
                     </div>
                 </div>
