@@ -21,7 +21,7 @@
     {
         global $mysqli;
         
-        $sql = "SELECT products_id,quantity,name,price,saleprice,path FROM cart_has_products
+        $sql = "SELECT cart_id,products_id,quantity,name,price,saleprice,path FROM cart_has_products
                 LEFT JOIN cart ON cart.id = cart_has_products.cart_id
                 LEFT JOIN products ON products.id=cart_has_products.products_id
                 LEFT JOIN image ON products.image_id = image.id
@@ -40,14 +40,17 @@
         $date = date("Y-m-d");
         
         if($orderInfo['phone'] == ""){
-            $sql = "INSERT INTO order(name,surname,street,city,zipcode,state,email,date)
-                VALUES (".$orderInfo['name'].",".$orderInfo['lastname'].",".$orderInfo['street'].",".$orderInfo['city'].",
-                        ".$orderInfo['zip'].",".$orderInfo['state'].",".$orderInfo['email'].",$date)";
+            $sql = "INSERT INTO mydb.order(name,surname,street,city,zipcode,state,email,date)
+                VALUES ('".$orderInfo['firstname']."','".$orderInfo['lastname']."','".$orderInfo['street']."','".$orderInfo['city']."',
+                        '".$orderInfo['zip']."','".$orderInfo['state']."','".$orderInfo['email']."','".$date."')";
         }else{
-            $sql = "INSERT INTO order(name,surname,street,city,zipcode,state,telephone,email,date)
-                VALUES (".$orderInfo['name'].",".$orderInfo['lastname'].",".$orderInfo['street'].",".$orderInfo['city'].",
-                        ".$orderInfo['zip'].",".$orderInfo['state'].",".$orderInfo['phone'].",".$orderInfo['email'].",$date)";
+            
+            $sql = "INSERT INTO mydb.order(name,surname,street,city,zipcode,state,telephone,email,date)
+                VALUES ('".$orderInfo['firstname']."','".$orderInfo['lastname']."','".$orderInfo['street']."','".$orderInfo['city']."',
+                        '".$orderInfo['zip']."','".$orderInfo['state']."','".$orderInfo['phone']."','".$orderInfo['email']."','".$date."')";
         }
+        
+        echo $sql;
         
         $mysqli->query($sql);
         
@@ -57,12 +60,26 @@
         
         $mysqli->query($sql);
         
-        
-        $prod_ids = array();
+        $cartId = 0;
         
         while($data = $products->fetch_assoc()){
-            array_push($prod_ids,$data['products_id']);
+            
+            $cartId = $data['cart_id'];
+            
+            if($data['saleprice']==null OR $data['saleprice']==''){
+                $sql = "INSERT INTO order_has_products VALUES (".$id.",".$data['products_id'].",".$data['quantity'].",".$data['price'].")";
+            }else{
+                $sql = "INSERT INTO order_has_products VALUES (".$id.",".$data['products_id'].",".$data['quantity'].",".$data['saleprice'].")";
+            }
+            $mysqli->query($sql);
+            
         }
+        
+        $sql = "DELETE FROM cart_has_products WHERE cart_id =".$cartId;
+        
+        echo $sql;
+        
+        $mysqli->query($sql);
         
         
         
