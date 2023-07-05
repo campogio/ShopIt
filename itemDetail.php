@@ -16,6 +16,17 @@
 	
 	$body->setContent("itemId1",$_GET['itemid']);
 	$body->setContent("itemId2",$_GET['itemid']);
+	$body->setContent("itemId3",$_GET['itemid']);
+	$body->setContent("itemId4",$_GET['itemid']);
+	
+	if(isWishlisted($_GET['itemid'],$_SESSION['id'])){
+		$body->setContent("isWishlisted",'fa fa-heart');
+		
+		
+	}else{
+		$body->setContent("isWishlisted",'fa-heart-o fa');
+	}
+	
 	
 	$categories = getTableData("category");
 	

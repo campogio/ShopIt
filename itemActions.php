@@ -22,8 +22,10 @@
 		addToWishlist($_POST['wishlist'],$_SESSION['id']);
 		
 		unset($_POST);
+	}elseif (isset($_POST['unwishlist'])){
 		
-		header("Location: wishlist.php");
+		removeFromWishlist($_POST['unwishlist'],$_SESSION['id']);
+		
 	}
 	
 ?>

@@ -48,7 +48,10 @@
                   </select>
 
                   <button type="submit" name="cart" value="<[itemId1]>" class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                  <button type="submit" name="wishlist" value="<[itemId2]>" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-default"><i class="fa fa-heart-o"></i></button>
+                  <button type="button" name="wishlist" value="<[itemId2]>" data-toggle="tooltip" data-placement="top" title="Wishlist" class="btn btn-default"
+                          onclick="if($(this).children().hasClass('fa-heart-o fa')){$.post('itemActions.php',{wishlist: <[itemId3]>})}else{$.post('itemActions.php',{unwishlist: <[itemId4]>})}; $(this).children().toggleClass('fa fa-heart-o'); $(this).children().toggleClass('fa fa-heart');">
+                    <i class="<[isWishlisted]>"></i>
+                  </button>
                 </p>
               </form>
             </div>

@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -66,8 +66,58 @@
         
     }
     
-    function removeFromWishlist($itemId,$userId){
+    function isWishlisted($itemId,$userId){
+        global $mysqli;
+        
+        $wishlist= $mysqli->query("SELECT * FROM wishlist WHERE user_id =".$userId);
+        $wishlistId=0;
+        
+        if($wishlist->num_rows == 0){
+            return false;
+        }else{
+            while ($data = $wishlist->fetch_assoc()){
+                
+                echo json_encode($data);
+                
+                $wishlistId = $data['id'];
+            }
+        }
+        
+        $sql= "SELECT * FROM wishlist_has_products WHERE wishlist_id = ".$wishlistId." AND products_id= ".$itemId.";";
+        
+        $result =$mysqli->query($sql);
+        
+        if($result->num_rows == 0){
+            return false;
+        }
+        
+        return true;
+        
+    }
     
+    function removeFromWishlist($itemId,$userId){
+        global $mysqli;
+        
+        $wishlist= $mysqli->query("SELECT * FROM wishlist WHERE user_id =".$userId);
+        $wishlistId=0;
+        
+        if($wishlist->num_rows == 0){
+            $mysqli->query("INSERT INTO wishlist (user_id) VALUES (".$userId.")");
+            
+            $wishlistId= $mysqli->insert_id;
+        }else{
+            while ($data = $wishlist->fetch_assoc()){
+                
+                echo json_encode($data);
+                
+                $wishlistId = $data['id'];
+            }
+        }
+        
+        $sql= "DELETE FROM wishlist_has_products WHERE wishlist_id = ".$wishlistId." AND products_id= ".$itemId.";";
+        
+        $mysqli->query($sql);
+        
     }
     
     function addToWishlist($itemId,$userId){
