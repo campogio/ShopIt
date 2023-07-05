@@ -12,9 +12,15 @@
 		}
 		
 		if(isset($_SESSION['auth']['sellItem.php'])){
-			$template->setContent("itemSale", '<li class="nav-item dropdown menu-large"><a href="sellItem.php" >Sell an Item<b class="caret"></b></a>');
+			$template->setContent("itemSale", '<li class="nav-item dropdown menu-large"><a href="sellItem.php" >Sell an Item<b class="caret"></b></a></li>');
 		}else{
 			$template->setContent("itemSale", '');
+		}
+		
+		if(isset($_SESSION['auth']['manageItems.php'])){
+			$template->setContent("itemManage", '<li class="nav-item dropdown menu-large"><a href="manageItems.php" >Manage Items<b class="caret"></b></a></li>');
+		}else{
+			$template->setContent("itemManage", '');
 		}
 		
 		if(isset($_SESSION['id'])){

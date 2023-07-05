@@ -46,8 +46,6 @@
 			$body->setContent("discountAmount","");
 	
 		}
-	$body->setContent("quantity",$data['quantity']);
-	
 	
 	$body->setContent("price",$data['price']);
 	$body->setContent("totalItem",$total);

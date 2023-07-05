@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -368,6 +368,21 @@
         
     }
     
+    function getProductsBySeller($userId){
+        
+        global $mysqli;
+        
+        $sql = "SELECT products.*,category.name AS 'categoryname',image.path  FROM products
+                                    JOIN category ON products.category_id = category.id
+                                    JOIN image ON image.id = products.image_id
+                                    WHERE products.user_id=". $userId;
+        
+        $result= $mysqli->query($sql);
+        
+        return $result;
+        
+    }
+    
     function getProductById($id){
     
         global $mysqli;
@@ -496,7 +511,7 @@
     $result = $stmt->get_result();
 
     return $result;
-}
+    }
 
 
 ?>
