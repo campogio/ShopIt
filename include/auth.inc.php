@@ -34,7 +34,7 @@ class Auth
 
 
             if ($result->num_rows == 0) {
-                Header("Location: index.php?error?0rows");
+                Header("Location: index.php?error=0rows");
                 exit;
             }
 
@@ -65,7 +65,7 @@ class Auth
 
             if (!isset($_SESSION['auth'])) {
 
-                Header("Location: index.php?error?fuorilogin");
+                Header("Location: index.php?error=fuorilogin");
                 exit;
 
             }
@@ -77,15 +77,40 @@ class Auth
 		$script = basename($_SERVER['SCRIPT_NAME']);
 		
 		if (!isset($_SESSION['auth'][$script]) and $script !="login.php") {
-            Header("Location: index.php?error&non_autorizzato");
+            Header("Location: index.php?error=non_autorizzato");
             exit;
         }
 
     }
+	
+	static function register(){
+		
+		if (isset($_POST['email']) and isset($_POST['password'])) {
+		
+			$result=registerUser($_POST['email'],$_POST['password']);
+			
+			echo $result;
+			
+			
+			if($result == 0){
+				Header("Location: register.php?error=username_taken");
+				exit;
+			}
+			
+		}else{
+			Header("Location: register.php?error=form_errato");
+		}
+		
+	}
+	
 
 }
 
-Auth::doLogin();
+if(isset($_POST['register'])){
+	Auth::register();
+	unset($_POST['register']);
+}
 
+Auth::doLogin();
 
 ?>

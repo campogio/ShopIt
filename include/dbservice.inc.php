@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -307,13 +307,23 @@
         }
     }
     
-    function testInsert(){
+    function registerUser($user,$pass){
         
         global $mysqli;
-        $result = $mysqli->query("INSERT INTO user(username,password) VALUES('username','userpass');");
         
-        echo "ID THE QUERY WAS ADDED TO: ". $mysqli->insert_id;
+        $sql= "SELECT * FROM user WHERE username = '".$user."'";
         
+        echo $sql;
+        
+        $check = $mysqli->query($sql);
+        
+        if($check->num_rows>0){
+            return 0;
+        }
+        
+        $result = $mysqli->query("INSERT INTO user(username,password) VALUES('$user','$pass');");
+        
+        return $result;
     }
     
     function exists($table,$columns,$params){
