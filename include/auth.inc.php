@@ -49,6 +49,7 @@ class Auth
 
             $_SESSION['auth'] = $script;
 			$_SESSION['id']= $id;
+			$_SESSION['last_visited']= array();
 
 
         } else {

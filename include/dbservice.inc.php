@@ -67,6 +67,11 @@
     }
     
     function isWishlisted($itemId,$userId){
+        
+        if($userId == ''){
+            return false;
+        }
+        
         global $mysqli;
         
         $wishlist= $mysqli->query("SELECT * FROM wishlist WHERE user_id =".$userId);
@@ -96,6 +101,7 @@
     }
     
     function removeFromWishlist($itemId,$userId){
+        
         global $mysqli;
         
         $wishlist= $mysqli->query("SELECT * FROM wishlist WHERE user_id =".$userId);
@@ -121,6 +127,10 @@
     }
     
     function addToWishlist($itemId,$userId){
+        
+        if($userId == ''){
+            return false;
+        }
     
         global $mysqli;
         
@@ -351,8 +361,10 @@
     function getProductById($id){
     
         global $mysqli;
-        $result= $mysqli->query("SELECT products.*,category.name AS 'categoryname' FROM products
-                                    JOIN category ON products.category_id = category.id WHERE products.id= $id");
+        $result= $mysqli->query("SELECT products.*,category.name AS 'categoryname',image.path  FROM products
+                                    JOIN category ON products.category_id = category.id
+                                    JOIN image ON image.id = products.image_id
+                                    WHERE products.id= $id");
         
         return $result;
     }
