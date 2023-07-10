@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -352,6 +352,88 @@
         
         global $mysqli;
         $result= $mysqli->query("SHOW TABLES");
+        return $result;
+        
+    }
+    
+    function getProductsByFilters($filters,$amount,$offset){
+        
+        global $mysqli;
+        
+        $sql = "SELECT products.*,image.path FROM products JOIN image ON products.image_id = image.id ";
+        
+        $hasConditions = false;
+        //// -------------- SET JOINS ----------- ///////
+        if(isset($filters['category'])){
+            $category = $filters['category'];
+            $sql = $sql . " JOIN category ON products.category_id = category.id ";
+            $hasConditions = true;
+        }
+        
+        if(isset($filters['brand'])){
+            $sql = $sql . " JOIN brand ON products.brand_id = brand.id ";
+            $hasConditions = true;
+        }
+        
+        if(isset($filters['tags'])){
+            $sql = $sql . " JOIN products_has_tags ON products_has_tags.products_id = products.id ";
+            $hasConditions = true;
+        }
+        //// --------------- SET CONDITIONS ------------- //////
+        $multipleConditions = false;
+        if($hasConditions == true) $sql= $sql . " WHERE ";
+        
+        if(isset($filters['category'])){
+            $category = $filters['category'];
+            $sql = $sql . " category.name ='$category' ";
+            $multipleConditions = true;
+        }
+        
+        if(isset($filters['brand'])){
+            if($multipleConditions == true) $sql = $sql . " AND ";
+            
+            $brand = $filters['brand'];
+            $sql = $sql . " brand_id = $brand ";
+            $multipleConditions = true;
+        }
+        
+        if(isset($filters['tags'])){
+            if($multipleConditions == true) $sql = $sql . " AND ";
+            
+            if(count((array)$filters['tags'])){
+                
+                $first = true;
+                foreach ($filters['tags'] as $tag){
+                    
+                    if($first == true){
+                        $sql = $sql . " ( products_has_tags.tags_id = $tag ";
+                        $first = false;
+                    }else{
+                        $sql = $sql . " OR products_has_tags.tags_id = $tag";
+                    }
+                    
+                }
+                
+                $sql= $sql . ") ";
+            
+            }else{
+                
+                $tag = $filters['tags'][0];
+                $sql = $sql . "products_has_tags.tags_id = $tag";
+                
+            }
+            
+            
+            
+            $multipleConditions = true;
+        }
+        
+        $sql = $sql . " LIMIT $amount OFFSET $offset; ";
+        
+        echo $sql;
+        
+        $result= $mysqli->query($sql);
+        
         return $result;
         
     }

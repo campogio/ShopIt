@@ -1,14 +1,14 @@
 <?php
 	
-	//include "include/auth.inc.php";
+	include "include/auth.inc.php";
 	require "include/dbservice.inc.php";
 	
 	session_start();
 	
-	echo json_encode($_POST);
+	//echo json_encode($_POST);
 	
 	if(isset($_POST['cart'])){
-		echo "carting item";
+		//echo "carting item";
 		
 		addToCart($_POST['cart'],$_SESSION['id'],$_POST['quantity']);
 		
@@ -17,7 +17,7 @@
 		header("Location: cart.php");
 		
 	}elseif (isset($_POST['wishlist'])){
-		echo "wishlisting item";
+		//echo "wishlisting item";
 		
 		addToWishlist($_POST['wishlist'],$_SESSION['id']);
 		

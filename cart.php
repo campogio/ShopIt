@@ -1,7 +1,7 @@
 <?php
 	
 	require "include/template2.inc.php";
-	//require "include/auth.inc.php";
+	require "include/auth.inc.php";
 	require "include/dbservice.inc.php";
 	require "include/utils.inc.php";
 	
