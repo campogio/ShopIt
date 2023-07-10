@@ -58,8 +58,7 @@
                     <div class="panel-body">
                         <ul class="nav nav-pills flex-column text-sm category-menu">
                             <[foreach]>
-                            <li class="nav-item"><a href="fullCategory.php?category=<[categoryHref]>&page=1"
-                                                    class="nav-link d-flex align-items-center justify-content-between"><span> <[sidebarCategory]> </span></a>
+                            <li class="nav-item"><a href="fullCategory.php?category=<[categoryHref]>&page=1" class="nav-link d-flex align-items-center justify-content-between"><span> <[sidebarCategory]> </span></a>
                             </li>
                             <[/foreach]>
                         </ul>
@@ -82,7 +81,7 @@
                                     <div>
                                         <[foreach]>
                                         <div class="form-group">
-                                            <input type="radio" name="category" value="<[categoryValue]>"><[filterCategory]></input>
+                                            <input type="radio" name="category" value="<[categoryValue]>" onclick="changeTags('<[categoryJs]>')"><[filterCategory]></input>
                                         </div>
                                         <[/foreach]>
                                     </div>
@@ -94,7 +93,6 @@
                                     <h5 class="h5 panel-title "><a data-toggle="collapse" href="#collapseBrand" aria-expanded="true" aria-controls="collapseBrand">Brands</a></h5>
                                 </div>
                                 <div id="collapseBrand" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordionFilt" class="collapse">
-                                    <input type="checkbox"> Tag
                                 </div>
 
 
@@ -103,7 +101,7 @@
                                     <h5 class="h5 panel-title "><a data-toggle="collapse" href="#collapseTags" aria-expanded="true" aria-controls="collapseTags">Tags</a></h5>
                                 </div>
                                 <div id="collapseTags" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordionFilt" class="collapse">
-                                    <input type="checkbox"> Tag
+                                    <div id="unselected">Please select a category first!</div>
                                 </div>
 
 
@@ -112,28 +110,49 @@
 
                             <button type="submit" class="btn btn-template-outlined">Apply Filters</button>
                         </form>
-                        <div class="row">
-
-                        </div>
-                        <ul class="nav nav-pills flex-column text-sm category-menu">
-                            <div class="form-group">
-
-                                <div class="checkbox">
-
-                                    <label>
-
-                                        <input type="checkbox"> Tag
-
-                                    </label>
-
-                                </div>
-
-                            </div>
-                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+
+    function changeTags(value){
+        $.ajax({type:"GET",url: "api.php",data:{tags:value},success: function(response){
+
+            alert(response[0]['tag']);
+
+            const oldTags = document.querySelectorAll('.checkbox');
+            const warning = document.getElementById('unselected');
+
+            if(warning){
+                $(warning).empty();
+                warning.remove();
+            }
+
+            oldTags.forEach((element) => {
+                $(element).empty();
+                element.remove();
+            });
+
+            Object.entries(response).forEach((element) =>{
+
+                const div = document.createElement("div");
+                $(div).addClass("checkbox");
+                div.innerHTML="<input type='checkbox' name='tag[]' value="+element[1].id+"> "+element[1].name ;
+                const tagBoard = document.getElementById("collapseTags");
+
+                tagBoard.appendChild(div);
+
+                //alert(element[1].id)
+                //alert(element[1].name)
+            });
+
+        }});
+
+    }
+
+</script>
 

@@ -356,6 +356,16 @@
         
     }
     
+    function getTagsByCategory($category){
+        global $mysqli;
+        
+        $sql = "SELECT * FROM tags WHERE category_id = ".$category;
+        
+        $result = $mysqli->query($sql);
+        
+        return $result;
+    }
+    
     function getProductsByFilters($filters,$amount,$offset){
         
         global $mysqli;

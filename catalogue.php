@@ -22,6 +22,16 @@
 		$filters['category']= $_GET['category'];
 	}
 	
+	if(isset($_GET['tag'])){
+		
+		$filters['tags'] = array();
+		
+		foreach ($_GET['tag'] as $tag){
+			array_push($filters['tags'],$tag);
+		}
+		
+	}
+	
 	/////// TEST FILTER
 	//$filters['category']= 'hello';
 	
@@ -33,11 +43,12 @@
 	$categories = getTableData("category");
 	
 	while ($data= $categories->fetch_assoc()){
-		echo json_encode($data);
+		//echo json_encode($data);
 		$body->setContent("categoryHref", $data['name']);
 		$body->setContent("sidebarCategory", $data['name']);
 		$body->setContent("filterCategory", $data['name']);
 		$body->setContent("categoryValue", $data['name']);
+		$body->setContent("categoryJs", $data['id']);
 		
 	}
 	
