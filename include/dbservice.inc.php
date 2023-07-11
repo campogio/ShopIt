@@ -372,7 +372,7 @@
         return $result;
     }
     
-    function getProductsByFilters($filters,$amount,$offset){
+    function getProductsByFilters($filters,$amount,$offset,$search){
         
         global $mysqli;
         
@@ -380,6 +380,10 @@
         
         $hasConditions = false;
         //// -------------- SET JOINS ----------- ///////
+        if($search != ''){
+            $hasConditions = true;
+        }
+        
         if(isset($filters['category'])){
             $category = $filters['category'];
             $sql = $sql . " JOIN category ON products.category_id = category.id ";
@@ -399,7 +403,16 @@
         $multipleConditions = false;
         if($hasConditions == true) $sql= $sql . " WHERE ";
         
+        if($search != ''){
+            
+            $sql = $sql . " name LIKE '%$search%' ";
+            $multipleConditions = true;
+        }
+        
+        
         if(isset($filters['category'])){
+            if($multipleConditions == true) $sql = $sql . " AND ";
+            
             $category = $filters['category'];
             $sql = $sql . " category.name ='$category' ";
             $multipleConditions = true;

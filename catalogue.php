@@ -32,6 +32,8 @@
 		
 	}
 	
+	
+	
 	/////// TEST FILTER
 	//$filters['category']= 'hello';
 	
@@ -52,8 +54,11 @@
 		
 	}
 	
-	
-	$products = getProductsByFilters($filters,12,($page-1)*12);
+	if(isset($_GET['search'])){
+		$products = getProductsByFilters($filters,12,($page-1)*12,$_GET['search']);
+	}else{
+		$products = getProductsByFilters($filters,12,($page-1)*12,'');
+	}
 	
 	while ($data= $products->fetch_assoc()){
 		

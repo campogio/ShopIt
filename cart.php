@@ -28,7 +28,6 @@
 	$body->setContent("itemId2",$data['products_id']);
 	$body->setContent("itemId3",$data['products_id']);
 	
-	
 	$body->setContent("prodImage",$data['path']);
 	
 	$body->setContent("prodImageName",$data['name']);
