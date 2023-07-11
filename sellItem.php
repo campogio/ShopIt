@@ -126,7 +126,7 @@
 				}
 			}
 			
-			insertProduct($_SESSION['id'],$_POST['name'],$_POST['price'],$_POST['saleprice'],$_POST['brand'],$_POST['category'],$showcaseId,$imageIds);
+			insertProduct($_SESSION['id'],$_POST['name'],$_POST['price'],$_POST['saleprice'],$_POST['brand'],$_POST['category'],$showcaseId,$imageIds,$_POST['tag']);
 			
 			$body->setContent("alertBox","Added");
 			

@@ -277,7 +277,7 @@
         $mysqli->query($sql);
     }
     
-    function insertProduct($userid,$name,$price,$saleprice,$brand,$category,$showcaseid,$imagesids)
+    function insertProduct($userid,$name,$price,$saleprice,$brand,$category,$showcaseid,$imagesids,$tags)
     {
         global $mysqli;
         $sql = "";
@@ -302,6 +302,12 @@
         
         foreach ($imagesids as $image){
             $sql = "INSERT INTO products_has_image VALUES (".$itemid.",".$image.")";
+            
+            $mysqli->query($sql);
+        }
+        
+        foreach ($tags as $tag){
+            $sql = "INSERT INTO products_has_tags VALUES (".$itemid.",".$tag.")";
             
             $mysqli->query($sql);
         }
