@@ -114,8 +114,6 @@
     $(iconsDiv).append(confirmIcon);
     $(iconsDiv).append(cancelIcon);
 
-
-
   }
 
   function cancelEdit(itemId,oldPrice,oldDiscount,oldTotal){
@@ -146,6 +144,37 @@
   }
 
   function confirmEdit(itemId){
+
+    if(confirm("Are you sure you want to change this item?")){
+
+      var priceDiv = document.getElementById("price"+itemId);
+      var discountDiv = document.getElementById("discount"+itemId);
+      var priceInput = document.getElementById("priceInput"+itemId);
+      var discountInput = document.getElementById("discountInput"+itemId);
+      var totalDiv = document.getElementById("total"+itemId);
+
+      var editDiv= document.getElementById("edit"+itemId);
+      var deleteDiv= document.getElementById("delete"+itemId);
+
+      var confirmDiv= document.getElementById("confirm"+itemId);
+      var cancelDiv= document.getElementById("cancel"+itemId);
+
+
+      $(priceDiv).empty()
+      $(discountDiv).empty()
+
+      priceDiv.innerHTML=priceInput.value
+      discountDiv.innerHTML= discountInput.value
+
+      totalDiv.innerHTML=priceInput.value-discountInput.value
+
+      confirmDiv.remove();
+      cancelDiv.remove();
+
+      editDiv.style.display = "inline";
+      deleteDiv.style.display = "inline";
+
+    }
 
   }
 
