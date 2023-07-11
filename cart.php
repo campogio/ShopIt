@@ -1,14 +1,17 @@
 <?php
 	
 	require "include/template2.inc.php";
-	require "include/auth.inc.php";
 	require "include/dbservice.inc.php";
 	require "include/utils.inc.php";
 	
 	session_start();
 	
+	if(!isset($_SESSION['id'])){
+		header("location: register.php?error=nologin");
+	}
+	
 	if(isset($_POST['remove'])){
-		echo "testJS";
+		//echo "testJS";
 		removeFromCart($_SESSION['id'],$_POST['remove']);
 		
 		unset($_POST['remove']);
@@ -16,6 +19,8 @@
 	
 	$main = new Template("dtml/frame-public.html");
 	$body = new Template("dtml/user-cart.html");
+	
+	populatePublicFrame($main);
 	
 	$counter = 0;
 	
@@ -52,7 +57,7 @@
 	$totalAmount+= $total;
 	$counter += $data['quantity'];
 	
-	echo json_encode($data);
+	//echo json_encode($data);
 	
 	}
 	

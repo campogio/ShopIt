@@ -8,7 +8,7 @@
 	session_start();
 	
 	//echo "Hello";
-	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+	//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	
 	$main = new Template("dtml/frame-public.html");
 	
@@ -96,7 +96,7 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		if(isFormValid()) {
-			//TODO ADD RICH TEXT FOR DESC, ADD BREADCRUMB TO GET OUT OF THIS PAGE
+			//TODO ADD RICH TEXT FOR DESC
 			
 			$fileName = basename($_FILES['showcase']['name']);
 			$fileParts = pathinfo($_FILES['showcase']['name']);
@@ -126,7 +126,7 @@
 				}
 			}
 			
-			insertProduct($_SESSION['id'],$_POST['name'],$_POST['price'],$_POST['saleprice'],$_POST['brand'],$_POST['category'],$showcaseId,$imageIds,$_POST['tag']);
+			insertProduct($_SESSION['id'],$_POST['name'],$_POST['price'],$_POST['saleprice'],$_POST['brand'],$_POST['category'],$showcaseId,$imageIds,$_POST['tag'],$_POST['description']);
 			
 			$body->setContent("alertBox","Added");
 			

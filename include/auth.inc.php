@@ -54,7 +54,7 @@ class Auth
 
         } else {
 			
-			echo json_encode($_SESSION) ;
+			//echo json_encode($_SESSION) ;
 			
 			if(basename($_SERVER['SCRIPT_NAME']) =="index.php"){
 				return;
@@ -89,7 +89,7 @@ class Auth
 		
 			$result=registerUser($_POST['email'],$_POST['password']);
 			
-			echo $result;
+			//echo $result;
 			
 			
 			if($result == 0){

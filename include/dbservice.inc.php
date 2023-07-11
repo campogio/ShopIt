@@ -10,7 +10,7 @@
         
         $sql= "INSERT INTO image(path) VALUES ('$filepath')";
         
-        echo $sql;
+        //echo $sql;
         
         $result = $mysqli->query($sql);
         
@@ -48,7 +48,7 @@
         }else{
             while ($data = $wishlist->fetch_assoc()){
                 
-                echo json_encode($data);
+                //echo json_encode($data);
                 
                 $wishlistId = $data['id'];
             }
@@ -82,7 +82,7 @@
         }else{
             while ($data = $wishlist->fetch_assoc()){
                 
-                echo json_encode($data);
+                //echo json_encode($data);
                 
                 $wishlistId = $data['id'];
             }
@@ -114,7 +114,7 @@
         }else{
             while ($data = $wishlist->fetch_assoc()){
                 
-                echo json_encode($data);
+                //echo json_encode($data);
                 
                 $wishlistId = $data['id'];
             }
@@ -144,7 +144,7 @@
         }else{
             while ($data = $wishlist->fetch_assoc()){
                 
-                echo json_encode($data);
+                //echo json_encode($data);
                 
                 $wishlistId = $data['id'];
             }
@@ -197,7 +197,7 @@
                         '".$orderInfo['zip']."','".$orderInfo['state']."','".$orderInfo['phone']."','".$orderInfo['email']."','".$date."',".$total.",0)";
         }
         
-        echo $sql;
+        //echo $sql;
         
         $mysqli->query($sql);
         
@@ -224,7 +224,7 @@
         
         $sql = "DELETE FROM cart_has_products WHERE cart_id =".$cartId;
         
-        echo $sql;
+        //echo $sql;
         
         $mysqli->query($sql);
         
@@ -236,7 +236,7 @@
         global $mysqli;
         
         $sql = "SELECT * FROM cart WHERE user_id =".$userId;
-        echo $sql;
+        //echo $sql;
         $res =$mysqli->query($sql);
         $id = 0;
         
@@ -246,7 +246,7 @@
         
         $sql = "DELETE FROM cart_has_products WHERE cart_id = ".$id." AND products_id = " .$productId ."; ";
         
-        echo $sql;
+        //echo $sql;
         
         $mysqli->query($sql);
     }
@@ -265,7 +265,7 @@
         
             while ($data = $cart->fetch_assoc()){
                 
-                echo json_encode($data);
+                //echo json_encode($data);
                 
                 $cartId = $data['id'];
             }
@@ -277,17 +277,31 @@
         $mysqli->query($sql);
     }
     
-    function insertProduct($userid,$name,$price,$saleprice,$brand,$category,$showcaseid,$imagesids,$tags)
+    function insertProduct($userid,$name,$price,$saleprice,$brand,$category,$showcaseid,$imagesids,$tags,$desc)
     {
         global $mysqli;
         $sql = "";
         
         $date = date("Y-m-d");
+        
+        //if (count($_FILES) > 0) {
+        //    if (is_uploaded_file($_FILES['userImage']['tmp_name'])) {
+        //        $imgData = file_get_contents($_FILES['userImage']['tmp_name']);
+        //        $imgType = $_FILES['userImage']['type'];
+        //        $sql = "INSERT INTO tbl_image(imageType ,imageData) VALUES(?, ?)";
+        //        $statement = $conn->prepare($sql);
+        //        $statement->bind_param('ss', $imgType, $imgData);
+        //        $current_id = $statement->execute() or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_connect_error());
+        //    }
+        //}
+        
+        $desc= base64_encode($desc);
+        
 
         if($saleprice != ""){
-            $sql = "INSERT INTO products(user_id,name,price,saleprice,brand_id,category_id,image_id,added) VALUES (".$userid.",'".$name."',".$price.",".$saleprice.",".$brand.",".$category.",".$showcaseid.",'".$date."')";
+            $sql = "INSERT INTO products(user_id,name,price,saleprice,brand_id,category_id,image_id,added,description) VALUES (".$userid.",'".$name."',".$price.",".$saleprice.",".$brand.",".$category.",".$showcaseid.",'".$date."','$desc')";
         }else{
-            $sql = "INSERT INTO products(user_id,name,price,brand_id,category_id,image_id,added) VALUES (".$userid.",'".$name."',".$price.",".$brand.",".$category.",".$showcaseid.",'".$date."')";
+            $sql = "INSERT INTO products(user_id,name,price,brand_id,category_id,image_id,added,description) VALUES (".$userid.",'".$name."',".$price.",".$brand.",".$category.",".$showcaseid.",'".$date."','$desc')";
         }
         
         echo $sql;
@@ -319,13 +333,15 @@
         
         $sql= "SELECT * FROM user WHERE username = '".$user."'";
         
-        echo $sql;
+        //echo $sql;
         
         $check = $mysqli->query($sql);
         
         if($check->num_rows>0){
             return 0;
         }
+        
+        $id = $mysqli->insert_id;
         
         $result = $mysqli->query("INSERT INTO user(username,password) VALUES('$user','$pass');");
         
@@ -459,7 +475,7 @@
         
         $sql = $sql . " LIMIT $amount OFFSET $offset; ";
         
-        echo $sql;
+        //echo $sql;
         
         $result= $mysqli->query($sql);
         
@@ -558,7 +574,7 @@
             }
         }
         
-        echo $sql;
+        //echo $sql;
         
         $mysqli->prepare($sql);
         
@@ -602,7 +618,7 @@
             $result = $mysqli->execute_query($sql,$params);
         }
         
-        echo $sql;
+        //echo $sql;
         
         return $result;
         

@@ -93,7 +93,9 @@
 			$body->setContent("itemPrice", $data['saleprice']);
 		}
 		
-		$body->setContent("itemDetails", "lorem ipsum");
+		$desc = base64_decode($data['description']);
+		
+		$body->setContent("itemDetails", $desc);
 		
 	}
 	
