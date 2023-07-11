@@ -16,8 +16,6 @@
 	while($data = $products->fetch_assoc()){
 		
 		$body->setContent("itemId",$data['id']);
-		$body->setContent("itemId2",$data['id']);
-		$body->setContent("itemId3",$data['id']);
 		
 		
 		$body->setContent("prodImage",$data['path']);

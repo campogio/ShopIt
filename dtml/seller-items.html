@@ -33,14 +33,17 @@
           <tbody>
 
           <[foreach]>
-          <tr>
+          <tr id="<[itemId]>">
             <td><a href="itemDetail.php?itemid=<[itemId]>"><img src="<[prodImage]>" alt="<[prodImageName]>" class="img-fluid"></a></td>
-            <td><a href="itemDetail.php?itemid=<[itemId2]>"><[prodName]></a></td>
-            <td><[price]></td>
-            <td><[discountAmount]></td>
-            <td><[totalItem]></td>
+            <td><a href="itemDetail.php?itemid=<[itemId]>"><[prodName]></a></td>
+            <td id="price<[itemId]>"><[price]></td>
+            <td id="discount<[itemId]>"><[discountAmount]></td>
+            <td id="total<[itemId]>"><[totalItem]></td>
             <form action="POST"></form>
-            <td> <a href="itemDetail.php?itemid=<[itemId3]>"><button class="btn"><i class="fa fa-edit"></i></button></a>   <i onclick="if(window.confirm('Are you sure you want to delete this item? This action is not reversible.')){$(this).parent().parent().remove();$.post('',{remove: <[itemId3]>})}" class="fa fa-trash-o"></i></td>
+            <td id="icons<[itemId]>">
+              <i id="edit<[itemId]>" class="fa fa-edit " onclick="editItemPrice(<[itemId]>)"></i>
+              <i id="delete<[itemId]>" class="fa fa-trash-o" onclick="if(window.confirm('Are you sure you want to delete this item? This action is not reversible.')){$(this).parent().parent().remove();$.post('',{remove: <[itemId]>})}"></i>
+            </td>
           </tr>
           <[/foreach]>
 
@@ -56,3 +59,94 @@
   </div>
 
 </div>
+
+<script>
+
+  function editItemPrice(itemId){
+
+    var editDiv= document.getElementById("edit"+itemId);
+    var deleteDiv= document.getElementById("delete"+itemId);
+    var priceDiv = document.getElementById("price"+itemId);
+    var discountDiv = document.getElementById("discount"+itemId);
+    var totalDiv = document.getElementById("total"+itemId);
+
+
+    var oldPrice = priceDiv.innerHTML;
+    var oldDiscount = discountDiv.innerHTML;
+    var oldTotal = totalDiv.innerHTML;
+
+
+    $(priceDiv).empty();
+    $(discountDiv).empty();
+    $(totalDiv).empty();
+
+
+    const priceInput = document.createElement("input");
+    priceInput.id= "priceInput"+itemId;
+    priceInput.type= "number";
+    $(priceInput).addClass("deletable");
+    const discountInput = document.createElement("input");
+    discountInput.id= "discountInput"+itemId;
+    discountInput.type= "number";
+    $(discountInput).addClass("deletable");
+
+    $(priceDiv).append(priceInput)
+    $(discountDiv).append(discountInput)
+
+    editDiv.style.display = "none";
+    deleteDiv.style.display = "none";
+
+    const confirmIcon = document.createElement("i");
+    const cancelIcon = document.createElement("i");
+
+    confirmIcon.id = "confirm"+itemId
+    cancelIcon.id= "cancel"+itemId
+
+    $(confirmIcon).addClass("fa fa-check")
+    $(cancelIcon).addClass("fa fa-times")
+
+    confirmIcon.setAttribute("onclick","confirmEdit("+itemId+")")
+    cancelIcon.setAttribute("onclick",`cancelEdit('${itemId}','${oldPrice}','${oldDiscount}','${oldTotal}')`)
+
+
+    var iconsDiv= document.getElementById("icons"+itemId);
+
+    $(iconsDiv).append(confirmIcon);
+    $(iconsDiv).append(cancelIcon);
+
+
+
+  }
+
+  function cancelEdit(itemId,oldPrice,oldDiscount,oldTotal){
+    var priceDiv = document.getElementById("price"+itemId);
+    var discountDiv = document.getElementById("discount"+itemId);
+    var totalDiv = document.getElementById("total"+itemId);
+
+    var editDiv= document.getElementById("edit"+itemId);
+    var deleteDiv= document.getElementById("delete"+itemId);
+
+    var confirmDiv= document.getElementById("confirm"+itemId);
+    var cancelDiv= document.getElementById("cancel"+itemId);
+
+
+    $(priceDiv).empty()
+    $(discountDiv).empty()
+
+    priceDiv.innerHTML=oldPrice;
+    discountDiv.innerHTML=oldDiscount;
+    totalDiv.innerHTML=oldTotal;
+
+    confirmDiv.remove();
+    cancelDiv.remove();
+
+    editDiv.style.display = "inline";
+    deleteDiv.style.display = "inline";
+
+  }
+
+  function confirmEdit(itemId){
+
+  }
+
+</script>

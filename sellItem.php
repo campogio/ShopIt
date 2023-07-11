@@ -96,7 +96,6 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		if(isFormValid()) {
-			//TODO ADD RICH TEXT FOR DESC
 			
 			$fileName = basename($_FILES['showcase']['name']);
 			$fileParts = pathinfo($_FILES['showcase']['name']);
