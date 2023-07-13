@@ -12,6 +12,12 @@
 		changeProduct($_POST['changeItem'],$_POST['price'],$_POST['salePrice']);
 	}
 	
+	if(isset($_POST['removeItem'])){
+		
+		removeProduct($_POST['removeItem']);
+		
+	}
+	
 	function getCategoryTags(){
 		header('Content-Type: application/json; charset=utf-8');
 		$tags = array();

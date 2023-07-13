@@ -43,15 +43,12 @@
           <div class="col-md-12 banner mb-small"><a href="#"><img src="img/banner2.jpg" alt="" class="img-fluid"></a></div>
         </div>
         <div class="pages">
-          <p class="loadMore text-center"><a href="#" class="btn btn-template-outlined"><i class="fa fa-chevron-down"></i> Load more</a></p>
           <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
               <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-double-left"></i></a></li>
-              <li class="page-item active"><a href="#" class="page-link">1</a></li>
-              <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link">4</a></li>
-              <li class="page-item"><a href="#" class="page-link">5</a></li>
+              <[foreach]>
+              <[page]>
+              <[/foreach]>
               <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
             </ul>
           </nav>
@@ -70,38 +67,6 @@
               </li>
               <[/foreach]>
             </ul>
-          </div>
-        </div>
-        <div class="panel panel-default sidebar-menu">
-          <div class="panel-heading d-flex align-items-center justify-content-between">
-            <h3 class="h4 panel-title">Brands</h3><a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i><span class="d-none d-md-inline-block">Clear</span></a>
-          </div>
-          <div class="panel-body">
-            <form>
-              <div class="form-group">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Armani  (10)
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Versace  (12)
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Carlo Bruni  (15)
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Jack Honey  (14)
-                  </label>
-                </div>
-              </div>
-              <button class="btn btn-sm btn-template-outlined"><i class="fa fa-pencil"></i> Apply</button>
-            </form>
           </div>
         </div>
       </div>

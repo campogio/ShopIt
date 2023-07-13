@@ -71,7 +71,7 @@
 		
 		if(UPLOAD_ERR_OK === $_FILES['showcase']['error']){
 			if(getimagesize($_FILES['showcase']['tmp_name'])){
-				echo "IS FILE";
+				//echo "IS FILE";
 			}else{
 				return false;
 			}
@@ -82,7 +82,7 @@
 			
 			if (UPLOAD_ERR_OK === $file[4]) {
 				if(getimagesize($file[2])){
-					echo "IS FILE";
+					//echo "IS FILE";
 				}else{
 					return false;
 				}
@@ -115,8 +115,8 @@
 					$newName=uniqid($sellerId."-Image");
 					
 					if(getimagesize($file[2])){
-						echo "IS FILE";
-						echo json_encode($file);
+						//echo "IS FILE";
+						//echo json_encode($file);
 						move_uploaded_file($file[2], $uploadDir.DIRECTORY_SEPARATOR.$newName.".".$fileParts['extension']);
 						
 						array_push($imageIds,insertImage($uploadDir."/".$newName.".".$fileParts['extension']));

@@ -42,7 +42,7 @@
             <form action="POST"></form>
             <td id="icons<[itemId]>">
               <i id="edit<[itemId]>" class="fa fa-edit " onclick="editItemPrice(<[itemId]>)"></i>
-              <i id="delete<[itemId]>" class="fa fa-trash-o" onclick="if(window.confirm('Are you sure you want to delete this item? This action is not reversible.')){$(this).parent().parent().remove();$.post('',{remove: <[itemId]>})}"></i>
+              <i id="delete<[itemId]>" class="fa fa-trash-o" onclick="if(window.confirm('Are you sure you want to delete this item? This action is not reversible.')){$(this).parent().parent().remove();$.post('api.php',{removeItem: <[itemId]>})}"></i>
             </td>
           </tr>
           <[/foreach]>

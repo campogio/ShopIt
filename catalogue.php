@@ -4,6 +4,8 @@
 	require "include/dbservice.inc.php";
 	require "include/utils.inc.php";
 	
+	session_start();
+	
 	$main = new Template("dtml/frame-public.html");
 	
 	$body = new Template("dtml/shop-catalogue.html");
@@ -18,8 +20,13 @@
 	}
 	
 	if(isset($_GET['category'])){
-		echo $_GET['category'];
+		//echo $_GET['category'];
 		$filters['category']= $_GET['category'];
+	}
+	
+	if(isset($_GET['brand'])){
+		//echo $_GET['category'];
+		$filters['brand']= $_GET['brand'];
 	}
 	
 	if(isset($_GET['tag'])){
@@ -32,15 +39,7 @@
 		
 	}
 	
-	
-	
-	/////// TEST FILTER
-	//$filters['category']= 'hello';
-	
-	//$filters['brand'] = 1;
-	
-	//$filters['tags']= [1,2,3];
-	///////////////////////
+	//////// CATEGORY POPULATION START /////////////
 	
 	$categories = getTableData("category");
 	
@@ -53,6 +52,18 @@
 		$body->setContent("categoryJs", $data['id']);
 		
 	}
+	
+	/////////// BRAND POPULATION START ////////////////
+	
+	$brands = getTableData("brand");
+	
+	while ($data= $brands->fetch_assoc()){
+		//echo json_encode($data);
+		$body->setContent("brandValue", $data['id']);
+		$body->setContent("filterBrand", $data['name']);
+	}
+	
+	/////////////////////////////////////////////
 	
 	if(isset($_GET['search'])){
 		$products = getProductsByFilters($filters,12,($page-1)*12,$_GET['search']);
@@ -90,6 +101,30 @@
 		}
 		
 		
+	}
+	
+	/// -------- PAGING ----------- /////
+	
+	if($page == 1){
+		
+		$body->setContent("page",'<li class="page-item active"><a href="catalogue.php?page=1" class="page-link">1</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=2" class="page-link">2</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=3" class="page-link">3</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=4" class="page-link">4</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=5" class="page-link">5</a></li>');
+		
+	}elseif ($page == 2){
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=1" class="page-link">1</a></li>');
+		$body->setContent("page",'<li class="page-item active"><a href="catalogue.php?page=2" class="page-link">2</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=3" class="page-link">3</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=4" class="page-link">4</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page=5" class="page-link">5</a></li>');
+	}else{
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page='.($page-2).'" class="page-link">'.($page-2).'</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page='.($page-1).'" class="page-link">'.($page-1).'</a></li>');
+		$body->setContent("page",'<li class="page-item active"><a href="catalogue.php?page='.($page).'" class="page-link">'.($page).'</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page='.($page+1).'" class="page-link">'.($page+1).'</a></li>');
+		$body->setContent("page",'<li class="page-item"><a href="catalogue.php?page='.($page+2).'" class="page-link">'.($page+2).'</a></li>');
 	}
 	
 	$main ->setContent("body", $body->get());

@@ -2,7 +2,7 @@
 
     require "dbms.inc.php";
     
-    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
     
     
     function insertImage($filepath){
@@ -277,6 +277,16 @@
         $mysqli->query($sql);
     }
     
+    function removeProduct($prodId){
+        
+        global $mysqli;
+        
+        $sql = "DELETE FROM products WHERE id= $prodId";
+        
+        $mysqli->query($sql);
+        
+    }
+    
     function changeProduct($prodId,$prodPrice,$prodSaleprice){
     
         global $mysqli;
@@ -320,7 +330,7 @@
             $sql = "INSERT INTO products(user_id,name,price,brand_id,category_id,image_id,added,description) VALUES (".$userid.",'".$name."',".$price.",".$brand.",".$category.",".$showcaseid.",'".$date."','$desc')";
         }
         
-        echo $sql;
+        //echo $sql;
         
         $mysqli->query($sql);
         
