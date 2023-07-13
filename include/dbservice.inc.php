@@ -277,6 +277,22 @@
         $mysqli->query($sql);
     }
     
+    function changeProduct($prodId,$prodPrice,$prodSaleprice){
+    
+        global $mysqli;
+        
+        if($prodSaleprice==$prodPrice){
+            $sql = "UPDATE products SET price=$prodPrice,saleprice=NULL WHERE id = $prodId";
+        }else{
+            $sql = "UPDATE products SET price=$prodPrice,saleprice=$prodSaleprice WHERE id = $prodId";
+        }
+        
+        $result=$mysqli->query($sql);
+        
+        return $result;
+        
+    }
+    
     function insertProduct($userid,$name,$price,$saleprice,$brand,$category,$showcaseid,$imagesids,$tags,$desc)
     {
         global $mysqli;

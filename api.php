@@ -6,6 +6,12 @@
 		getCategoryTags();
 	}
 	
+	if(isset($_POST['changeItem'])){
+		
+		//TODO Check item belongs to session id changing it
+		changeProduct($_POST['changeItem'],$_POST['price'],$_POST['salePrice']);
+	}
+	
 	function getCategoryTags(){
 		header('Content-Type: application/json; charset=utf-8');
 		$tags = array();
