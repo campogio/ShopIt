@@ -19,7 +19,7 @@
 	$body->setContent("categoryHeader",$_GET['category']);
 	$body->setContent("categoryBreadcrumb",$_GET['category']);
 	
-	$products = getProductsByCategory($_GET['category'],12,($_GET['page']-1)*12);
+	$products = getProductsByCategory($_GET['category'],9,($_GET['page']-1)*9);
 	
 	
 	$categories = getTableData("category");

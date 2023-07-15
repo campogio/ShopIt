@@ -14,7 +14,7 @@
 	
 	$body = new Template("dtml/sell-item.html");
 	
-	$sellerId=1;
+	$sellerId=$_SESSION['id'];
 	
 	$uploadDir="dtml"."/"."img"."/".$sellerId;
 	$files = array();
