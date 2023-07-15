@@ -35,7 +35,7 @@
           <div class="col-sm-6">
             <div class="box">
               <form action="itemActions.php" method="POST">
-                <p class="price"><[itemPrice]></p>
+                <p class="price"><[itemPrice::currency library="stringsmanip"]></p>
                 <p class="text-center">
                   <select name="quantity" id="item-quantity">
 
@@ -82,7 +82,7 @@
               <div class="image"><a href="itemDetail.php?itemid=<[recentProductId]>"><img src="<[recentProductImage]>" alt="" class="img-fluid image1"></a></div>
               <div class="text">
                 <h3 class="h5"><a href="itemDetail.php?itemid=<[recentProductId2]>"><[recentProductName]></a></h3>
-                <p class="price"><[recentProductPrice]></p>
+                <p class="price"><[recentProductPrice::currency library="stringsmanip"]></p>
               </div>
             </div>
           </div>
