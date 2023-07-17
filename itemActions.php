@@ -25,6 +25,8 @@
 			removeFromWishlist($_POST['unwishlist'],$_SESSION['id']);
 			
 		}
+	}else{
+		header("location: register.php");
 	}
 	
 	//echo json_encode($_POST);

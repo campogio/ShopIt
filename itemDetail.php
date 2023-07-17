@@ -4,7 +4,7 @@
 	include "include/dbservice.inc.php";
 	include "include/utils.inc.php";
 	
-	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+	//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	
 	session_start();
 	
@@ -59,7 +59,7 @@
 	
 	//----------------- END LAST VISITED SESSION CONTROL ------------//
 	
-	echo json_encode($_SESSION);
+	//echo json_encode($_SESSION);
 	
 	if(isWishlisted($_GET['itemid'],$_SESSION['id'])){
 		$body->setContent("isWishlisted",'fa fa-heart');
