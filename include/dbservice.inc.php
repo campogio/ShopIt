@@ -160,12 +160,14 @@
     
         global $mysqli;
         
-        $sql = "SELECT * FROM order_has_products
+        $sql = "SELECT order_has_products.*,image.*,products.*,user_has_order.user_id as 'buyerId' FROM order_has_products
                 LEFT JOIN user_has_order ON order_has_products.order_id = user_has_order.order_id
                 LEFT JOIN products ON order_has_products.products_id = products.id
                 LEFT JOIN image ON products.image_id = image.id
                 WHERE order_has_products.order_id = ".$orderId.";";
         $result=$mysqli->query($sql);
+        
+        echo $sql;
         
         return $result;
     }

@@ -6,7 +6,7 @@
 	
 	session_start();
 	
-	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+	//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	
 	$main = new Template("dtml/frame-public.html");
 	
@@ -18,9 +18,10 @@
 	
 	$db_userId=0;
 	
+	
 	while($data = $prods->fetch_assoc()){
 		
-		$db_userId = $data['user_id'];
+		$db_userId = $data['buyerId'];
 		
 		$body->setContent("productId",$data['products_id']);
 		$body->setContent("productId2",$data['products_id']);
@@ -36,11 +37,11 @@
 			
 			$body->setContent("discount",$discount);
 			
+			
 		}else{
 			$total = $data['price'] * $data['quantity'];
 			
 			$body->setContent("discount","");
-			
 		}
 		$body->setContent("quantity",$data['quantity']);
 		
@@ -51,15 +52,19 @@
 		$totalAmount+= $total;
 		$counter += $data['quantity'];
 		
-		echo json_encode($data);
+		//echo json_encode($data);
 		
 	}
 	
-	//TODO Manage if it's user's order or not
+	$body->setContent("subTotal",$totalAmount);
+	$body->setContent("totalShipping",$totalAmount+10);
+	
+	
+	
 	if($_SESSION['id']== $db_userId){
-		echo "Authorized";
+		//echo "Authorized";
 	}else{
-		echo "NOT Authorized";
+		header("location: index.php?error=unauthorized+access");
 	}
 	
 	$main->setContent("body",$body->get());
