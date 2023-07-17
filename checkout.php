@@ -4,15 +4,15 @@
 	require "include/dbservice.inc.php";
 	require "include/utils.inc.php";
 	
-	ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+	//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 	session_start();
 	
 	if(!isset($_SESSION['id'])){
 		header("location: register.php?error=nologin");
 	}
 	
-	echo json_encode($_POST);
-	echo json_encode($_SESSION);
+	//echo json_encode($_POST);
+	//echo json_encode($_SESSION);
 	
 	$main =new Template("dtml/frame-public.html");
 	
@@ -78,7 +78,7 @@
 				$totalAmount+= $total;
 				$counter += $data['quantity'];
 				
-				echo json_encode($data);
+				//echo json_encode($data);
 				
 			}
 			
