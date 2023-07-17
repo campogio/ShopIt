@@ -27,6 +27,12 @@
 	$prods = getCartForUser($_SESSION['id']);
 	$totalAmount = 0;
 	
+	if($prods->num_rows>0){
+		$body->setContent("checkoutBtn",'<button type="submit" class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></button>');
+	}else{
+		$body->setContent("checkoutBtn",'<button type="submit" disabled="true" class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></button>');
+	}
+	
 	while($data = $prods->fetch_assoc()){
 	
 	$body->setContent("itemId",$data['products_id']);
