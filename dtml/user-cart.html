@@ -41,9 +41,9 @@
                                     <td><a href="itemDetail.php?itemid=<[itemId]>"><img src="<[prodImage]>" alt="<[prodImageName]>" class="img-fluid"></a></td>
                                     <td><a href="itemDetail.php?itemid=<[itemId2]>"><[prodName]></a></td>
                                     <td><[quantity]></td>
-                                    <td><[price]></td>
-                                    <td><[discountAmount]></td>
-                                    <td><[totalItem]></td>
+                                    <td><[price::currency library="stringsmanip"]></td>
+                                    <td><[discountAmount::currency library="stringsmanip"]></td>
+                                    <td><[totalItem::currency library="stringsmanip"]></td>
                                     <td><i onclick="$(this).parent().parent().remove(); $.post('cart.php',{remove: <[itemId3]>})" class="fa fa-trash-o"></i></td>
                                 </tr>
                                 <[/foreach]>
@@ -51,7 +51,7 @@
                                 <tfoot>
                                 <tr>
                                     <th colspan="5">Total</th>
-                                    <th colspan="2"><[totalAmount]></th>
+                                    <th colspan="2"><[totalAmount::currency library="stringsmanip"]></th>
                                 </tr>
                                 </tfoot>
                             </table>
